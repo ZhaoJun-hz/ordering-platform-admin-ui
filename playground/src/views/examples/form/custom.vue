@@ -3,16 +3,26 @@ import { h } from 'vue';
 
 import { Page } from '@vben/common-ui';
 
-import { Card, Input, message } from 'ant-design-vue';
+import { Card, message } from 'ant-design-vue';
 
 import { useVbenForm } from '#/adapter/form';
+import GraphValidateCode from '#/views/examples/form/costom-sub/graph-validate-code.vue';
 
-const [Form] = useVbenForm({
+import { getBase64Img } from './costom-sub/img.data';
+
+const getImgApi = () => {
+  return new Promise<string>((resolve) => {
+    setTimeout(() => {
+      resolve(getBase64Img());
+    }, 500);
+  });
+};
+const [FormCustom] = useVbenForm({
   // 所有表单项共用，可单独在表单内覆盖
   commonConfig: {
     // 所有表单项
     componentProps: {
-      class: 'w-full',
+      class: 'w-full ',
     },
     labelClass: 'w-2/6',
   },
@@ -32,27 +42,24 @@ const [Form] = useVbenForm({
     {
       component: 'Input',
       fieldName: 'field1',
-      label: '自定义组件slot',
+      label: '是用前后缀slot',
       renderComponentContent: () => ({
         prefix: () => 'prefix',
         suffix: () => 'suffix',
       }),
     },
     {
-      component: h(Input, { placeholder: '请输入' }),
-      fieldName: 'field2',
-      label: '自定义组件',
-      rules: 'required',
-    },
-    {
       component: 'Input',
-      fieldName: 'field3',
+      componentProps: {
+        api: getImgApi,
+      },
+      fieldName: 'code',
       label: '自定义组件(slot)',
       rules: 'required',
     },
   ],
   // 中屏一行显示2个，小屏一行显示1个
-  wrapperClass: 'grid-cols-1 md:grid-cols-2',
+  wrapperClass: 'grid-cols-1 md:grid-cols-2 ',
 });
 
 function onSubmit(values: Record<string, any>) {
@@ -64,12 +71,25 @@ function onSubmit(values: Record<string, any>) {
 
 <template>
   <Page description="表单组件自定义示例" title="表单组件">
-    <Card title="基础示例">
-      <Form>
-        <template #field3="slotProps">
-          <Input placeholder="请输入" v-bind="slotProps" />
+    <Card title="自定义插槽示例">
+      <FormCustom>
+        <template #code="props">
+          <GraphValidateCode
+            :prop-api="props.api"
+            :prop-validate-failed="true"
+            :value="props.value"
+            @on-emit-on-blur="props.handleBlur()"
+            @on-emit-on-change="props.handleChange($event)"
+            @on-emit-on-focus="() => {}"
+            @update:value="
+              (nV) => {
+                console.log(`更新value ${nV}`);
+                props.setValue(nV);
+              }
+            "
+          />
         </template>
-      </Form>
+      </FormCustom>
     </Card>
   </Page>
 </template>

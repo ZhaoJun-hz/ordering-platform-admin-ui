@@ -57,7 +57,7 @@ const dashboardMenus = [
     },
     name: 'Dashboard',
     path: '/',
-    redirect: '/analytics',
+    // redirect: '/analytics',
     children: [
       {
         name: 'Analytics',
@@ -122,7 +122,7 @@ const createDemosMenus = (role: 'admin' | 'super' | 'user') => {
       },
       name: 'Demos',
       path: '/demos',
-      redirect: '/demos/access',
+      // redirect: '/demos/access',
       children: [
         {
           name: 'AccessDemos',
@@ -131,7 +131,7 @@ const createDemosMenus = (role: 'admin' | 'super' | 'user') => {
             icon: 'mdi:cloud-key-outline',
             title: 'demos.access.backendPermissions',
           },
-          redirect: '/demos/access/page-control',
+          // redirect: '/demos/access/page-control',
           children: [
             {
               name: 'AccessPageControlDemo',

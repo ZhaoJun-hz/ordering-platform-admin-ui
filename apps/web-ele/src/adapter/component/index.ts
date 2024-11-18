@@ -15,6 +15,7 @@ import {
   ElButton,
   ElCheckbox,
   ElCheckboxGroup,
+  ElDatePicker,
   ElDivider,
   ElInput,
   ElInputNumber,
@@ -24,6 +25,7 @@ import {
   ElSpace,
   ElSwitch,
   ElTimePicker,
+  ElTransfer,
   ElTreeSelect,
   ElUpload,
 } from 'element-plus';
@@ -81,6 +83,8 @@ async function initComponentAdapter() {
     TimePicker: ElTimePicker,
     TreeSelect: withDefaultPlaceholder(ElTreeSelect, 'select'),
     Upload: ElUpload,
+    DatePicker: ElDatePicker,
+    Transfer: ElTransfer,
   };
 
   // 将组件注册到全局共享状态中

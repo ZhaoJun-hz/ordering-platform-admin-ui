@@ -44,6 +44,7 @@
     "dayjs": "catalog:",
     "element-plus": "catalog:",
     "pinia": "catalog:",
+    "remeda": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },

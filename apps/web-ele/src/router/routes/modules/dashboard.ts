@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
   {
     component: BasicLayout,
     meta: {
-      icon: 'lucide:layout-dashboard',
+      icon: 'ep:user',
       order: -1,
       title: $t('page.dashboard.title'),
     },
