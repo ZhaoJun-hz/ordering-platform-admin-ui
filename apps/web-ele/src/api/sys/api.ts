@@ -1,4 +1,3 @@
-import type { BaseDataResp } from '../model/baseModel';
 import type { ApiListReq, ApiListResp } from './model/apiModel';
 
 import { requestClient } from '#/api/request';
@@ -19,7 +18,5 @@ export const getApiList = (params: ApiListReq) => {
       return `${key}=${params[key]}`;
     })
     .join('&');
-  return requestClient.get<BaseDataResp<ApiListResp>>(
-    `${Api.GetApiList}?${paramsStr}`,
-  );
+  return requestClient.get<ApiListResp>(`${Api.GetApiList}?${paramsStr}`);
 };

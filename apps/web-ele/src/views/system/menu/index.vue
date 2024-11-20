@@ -1,69 +1,107 @@
 <script setup lang="ts">
 import type { VxeGridProps } from '#/adapter/vxe-table';
+import type { MenuInfo, MenuTree } from '#/api/sys/model/menuModel';
+
+import { onMounted } from 'vue';
 
 import { AccessControl } from '@vben/access';
 import { Page, useVbenDrawer } from '@vben/common-ui';
 
-import { ElButton } from 'element-plus';
+import { ElButton, ElPopconfirm, ElTooltip } from 'element-plus';
+import { isPlainObject } from 'remeda';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { getApiList } from '#/api/sys/api';
+import {
+  deleteMenu,
+  getMenuInfo,
+  getMenuList,
+  getMenuTree,
+} from '#/api/sys/menu';
 
 import MenuForm from './form.vue';
+import { tableColumns } from './schemas';
 
 // table
-interface RowType {
-  category: string;
-  color: string;
-  id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
-}
-
-const gridOptions: VxeGridProps<RowType> = {
+const gridOptions: VxeGridProps<MenuInfo> = {
   checkboxConfig: {
     highlight: true,
     labelField: 'name',
   },
-  columns: [
-    { align: 'left', title: '', type: 'checkbox', width: 100 },
-    { title: '序号', type: 'seq', width: 50 },
-    { field: 'category', title: 'Category' },
-    { field: 'color', title: 'Color' },
-    { field: 'productName', title: 'Product Name' },
-    { field: 'price', title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'Date' },
-  ],
+  pagerConfig: {
+    enabled: false,
+  },
+  columns: [...(tableColumns.columns as any)],
   keepSource: true,
-  pagerConfig: {},
   toolbarConfig: {
     slots: {
       buttons: 'toolbar_buttons',
     },
   },
+  treeConfig: {
+    parentField: 'parentMenuId',
+    rowField: 'menuId',
+    transform: true,
+  },
+  proxyConfig: {
+    response: {
+      list: 'data',
+    },
+    ajax: {
+      query: async () => {
+        const res = await getMenuList();
+        return res;
+      },
+    },
+  },
 };
+let menuData: MenuTree[] = [];
+let apiData: { key: number; label: string }[] = [];
 const [Grid, gridApi] = useVbenVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useVbenDrawer({
   connectedComponent: MenuForm,
 });
 
-function openFormDrawer() {
-  // function openFormDrawer(record: any) {
-  // if (isPlainObject(record)) {
-  // drawerApi.setData({
-  // record,
-  // gridApi,
-  // });
-  // } else {
-  drawerApi.setData({
-    record: null,
-    gridApi,
-  });
-  // }
+async function openFormDrawer(record: any) {
+  const result = await getMenuTree();
+  const data = result.data ?? [];
+  data.push({ value: 0, title: '主菜单' } as MenuTree);
+  menuData = data;
+  // 编辑
+  if (isPlainObject(record)) {
+    const result = await getMenuInfo(record.menuId as number);
+    record.selectApi = result.selectApi ?? [];
+    drawerApi.setData({
+      record,
+      gridApi,
+      isUpdate: true,
+      menuData,
+      apiData,
+    });
+  } else {
+    // 新增
+    drawerApi.setData({
+      record: { sort: 10, parentMenuId: 0 },
+      gridApi,
+      isUpdate: false,
+      menuData,
+      apiData,
+    });
+  }
 
   drawerApi.open();
 }
+async function handlerDeleteMenu(record: any) {
+  await deleteMenu(record.menuId as number);
+  gridApi.reload();
+}
+onMounted(async () => {
+  const apiList = await getApiList({ pageNum: 1, pageSize: 10_000 });
+  apiData = apiList.data.map((item) => {
+    return Object.assign({}, { key: item.id!, label: item.title! });
+  });
+});
 </script>
 
 <template>
@@ -71,10 +109,27 @@ function openFormDrawer() {
     <Grid>
       <template #toolbar_buttons>
         <AccessControl :codes="['super admin']">
-          <ElButton type="success" @click="openFormDrawer"> Open </ElButton>
-          <ElButton type="warning">删除</ElButton>
-          <ElButton type="danger">全部删除</ElButton>
+          <ElButton type="success" @click="openFormDrawer"> 新增菜单 </ElButton>
         </AccessControl>
+      </template>
+      <template #action="{ row }">
+        <ElTooltip class="box-item" content="编辑" placement="top">
+          <ElButton round type="primary" @click="openFormDrawer(row)">
+            <span class="icon-[ep--edit]"></span>
+          </ElButton>
+        </ElTooltip>
+
+        <ElTooltip class="box-item" content="删除" placement="top">
+          <span>
+            <ElPopconfirm title="确定删除么?" @confirm="handlerDeleteMenu(row)">
+              <template #reference>
+                <ElButton round type="danger">
+                  <span class="icon-[ep--delete]"></span>
+                </ElButton>
+              </template>
+            </ElPopconfirm>
+          </span>
+        </ElTooltip>
       </template>
     </Grid>
     <Drawer />

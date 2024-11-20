@@ -5,6 +5,7 @@ import { ElTreeSelect } from 'element-plus';
 
 interface ITreeSelectProps {
   date: {}[];
+  defaultProps: {};
 }
 const props = defineProps<ITreeSelectProps>();
 const emit = defineEmits(['onInit']);
@@ -18,6 +19,7 @@ onMounted(() => {
     <ElTreeSelect
       v-model="selectValue"
       :data="props.date"
+      :props="defaultProps"
       accordion
       check-strictly
     />

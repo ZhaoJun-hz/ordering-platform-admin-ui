@@ -8,3 +8,8 @@ export interface BaseDataResp<T> {
   msg: string;
   data: T;
 }
+
+export interface BaseResp {
+  code?: number;
+  msg: string;
+}
