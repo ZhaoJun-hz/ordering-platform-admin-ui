@@ -24,15 +24,10 @@ import { tableColumns } from './schemas';
 
 // table
 const gridOptions: VxeGridProps<MenuInfo> = {
-  checkboxConfig: {
-    highlight: true,
-    labelField: 'name',
-  },
   pagerConfig: {
     enabled: false,
   },
   columns: [...(tableColumns.columns as any)],
-  keepSource: true,
   toolbarConfig: {
     slots: {
       buttons: 'toolbar_buttons',
@@ -49,8 +44,7 @@ const gridOptions: VxeGridProps<MenuInfo> = {
     },
     ajax: {
       query: async () => {
-        const res = await getMenuList();
-        return res;
+        return await getMenuList();
       },
     },
   },

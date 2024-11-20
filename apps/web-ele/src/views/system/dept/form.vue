@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MenuInfo, MenuTree } from '#/api/sys/model/menuModel';
+import type { DeptInfo, DeptTree } from '#/api/sys/model/deptModel';
 
 import { ref } from 'vue';
 
@@ -8,22 +8,19 @@ import { useVbenDrawer } from '@vben/common-ui';
 import { ElNotification } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
-import { createMenu, updateMenu } from '#/api/sys/menu';
-import ApiSelect from '#/components/ApiSelect.vue';
-import IconPicker from '#/components/IconSelect/icon-picker.vue';
+import { createDept, updateDept } from '#/api/sys/dept';
 import InputNumber from '#/components/InputNumber.vue';
 import TreeSelect from '#/components/TreeSelect.vue';
 
 import { dataFormSchemas } from './schemas';
 
 defineOptions({
-  name: 'MenuForm',
+  name: 'DeptForm',
 });
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-let menuData: MenuTree[];
-let apiData: { key: number; label: string }[];
+let deptData: DeptTree[] = [];
 
 const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
@@ -31,7 +28,6 @@ const [Form, formApi] = useVbenForm({
   schema: [...(dataFormSchemas.schema as any)],
   wrapperClass: 'grid-cols-2',
 });
-
 const [Drawer, drawerApi] = useVbenDrawer({
   onCancel() {
     drawerApi.close();
@@ -46,24 +42,23 @@ const [Drawer, drawerApi] = useVbenDrawer({
     isUpdate.value = drawerApi.getData()?.isUpdate;
     record.value = isOpen ? drawerApi.getData()?.record || {} : {};
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
-    menuData = drawerApi.getData()?.menuData;
-    apiData = drawerApi.getData()?.apiData;
+    deptData = drawerApi.getData()?.deptData;
     if (isOpen) {
       formApi.setValues(record.value);
     }
     drawerApi.setState({
-      title: isUpdate.value ? '编辑菜单' : '新增菜单',
+      title: isUpdate.value ? '编辑部门' : '新增部门',
     });
   },
 });
 
 async function onSubmit(values: Record<string, any>) {
   isUpdate.value
-    ? await updateMenu(values as MenuInfo)
-    : await createMenu(values as MenuInfo);
+    ? await updateDept(values as DeptInfo)
+    : await createDept(values as DeptInfo);
   ElNotification({
     title: 'Success',
-    message: `${isUpdate.value ? '编辑菜单' : '新增菜单'}操作成功`,
+    message: `${isUpdate.value ? '编辑部门' : '新增部门'}操作成功`,
     type: 'success',
   });
   gridApi.value.reload();
@@ -71,7 +66,6 @@ async function onSubmit(values: Record<string, any>) {
 }
 defineExpose(drawerApi);
 </script>
-
 <template>
   <Drawer
     :close-on-click-modal="false"
@@ -79,31 +73,11 @@ defineExpose(drawerApi);
     class="w-1/2"
   >
     <Form>
-      <template #selectApi="props">
-        <ApiSelect
-          v-model:select-values="record.selectApi"
-          :button-texts="['收回', '授权']"
-          :data="apiData"
-          :titles="['未授权', '已授权']"
-          @on-init="
-            (nV: number[]) => {
-              console.log(`ApiSelect init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:select-values="
-            (nV: number[]) => {
-              console.log(`ApiSelect update 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-        />
-      </template>
-      <template #parentMenuId="props">
+      <template #parentDeptId="props">
         <TreeSelect
-          v-model:select-value="record.parentMenuId"
-          :date="menuData"
-          :default-props="{ label: 'title' }"
+          v-model:select-value="record.parentDeptId"
+          :date="deptData"
+          :default-props="{ label: 'deptName' }"
           @on-init="
             (nV: number) => {
               console.log(`TreeSelect init 更新value ${nV}`);
@@ -118,23 +92,7 @@ defineExpose(drawerApi);
           "
         />
       </template>
-      <template #icon="props">
-        <IconPicker
-          v-model:icon-value="record.icon"
-          @on-init="
-            (nV: string) => {
-              console.log(`IconPicker init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:icon-value="
-            (newValue: string) => {
-              console.log(`IconPicker 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
+
       <template #sort="props">
         <InputNumber
           v-model:input-number="record.sort"
