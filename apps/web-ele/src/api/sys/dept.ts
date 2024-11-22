@@ -8,7 +8,7 @@ import type {
 import { requestClient } from '../request';
 
 enum Api {
-  BaseDeptApi = '/sys/dept/',
+  BaseDeptApi = '/sys/dept',
   DeptTreeApi = '/sys/dept/tree',
 }
 

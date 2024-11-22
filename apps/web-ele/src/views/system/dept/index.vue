@@ -48,7 +48,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
 async function openFormDrawer(record: any) {
   const result = await getDeptTree();
   const data = result.data ?? [];
-  data.push({ value: 0, deptName: '主部门' } as DeptTree);
+  data.push({ deptId: 0, deptName: '主部门' } as DeptTree);
   const deptData = data;
   if (isPlainObject(record)) {
     drawerApi.setData({

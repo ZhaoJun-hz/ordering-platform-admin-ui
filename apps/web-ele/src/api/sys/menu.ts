@@ -2,13 +2,14 @@ import type { BaseResp } from '../model/baseModel';
 import type {
   MenuInfo,
   MenuInfoListResp,
+  MenuTreeReq,
   MenuTreeResp,
 } from './model/menuModel';
 
-import { requestClient } from '../request';
+import { buildQueryParams, requestClient } from '../request';
 
 enum Api {
-  BaseMenuApi = '/sys/menu/',
+  BaseMenuApi = '/sys/menu',
   MenuTreeApi = '/sys/menu/tree',
 }
 
@@ -27,8 +28,10 @@ export const getMenuList = () => {
   return requestClient.get<MenuInfoListResp>(Api.BaseMenuApi);
 };
 
-export const getMenuTree = () => {
-  return requestClient.get<MenuTreeResp>(Api.MenuTreeApi);
+export const getMenuTree = (params: MenuTreeReq) => {
+  return requestClient.get<MenuTreeResp>(
+    `${Api.MenuTreeApi}?${buildQueryParams(params)}`,
+  );
 };
 
 export const getMenuInfo = (id: number) => {

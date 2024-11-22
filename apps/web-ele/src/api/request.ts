@@ -111,3 +111,14 @@ function createRequestClient(baseURL: string) {
 export const requestClient = createRequestClient(apiURL);
 
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
+
+export const buildQueryParams = <T extends Record<string, any>>(
+  params: T,
+): string => {
+  return Object.keys(params)
+    .filter((key) => params[key] !== null && params[key] !== undefined) // Filter out null or undefined values
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`,
+    ) // Encode keys and values
+    .join('&');
+};

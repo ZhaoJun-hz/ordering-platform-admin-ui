@@ -63,6 +63,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: '',
+                  label: '全部',
                 },
                 () => '全部',
               ),
@@ -70,6 +71,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'SYS',
+                  label: '系统',
                 },
                 () => '系统',
               ),
@@ -77,6 +79,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'BUS',
+                  label: '业务',
                 },
                 () => '业务',
               ),
@@ -98,6 +101,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: '',
+                  label: '全部',
                 },
                 () => '全部',
               ),
@@ -105,6 +109,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'GET',
+                  label: 'GET',
                 },
                 () => 'GET',
               ),
@@ -112,6 +117,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'POST',
+                  label: 'POST',
                 },
                 () => 'POST',
               ),
@@ -119,6 +125,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'PUT',
+                  label: 'PUT',
                 },
                 () => 'PUT',
               ),
@@ -126,6 +133,7 @@ export const searchFormSchemas: VbenFormProps = {
                 ElOption,
                 {
                   value: 'DELETE',
+                  label: 'DELETE',
                 },
                 () => 'DELETE',
               ),

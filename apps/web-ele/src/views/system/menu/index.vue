@@ -58,9 +58,9 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 async function openFormDrawer(record: any) {
-  const result = await getMenuTree();
+  const result = await getMenuTree({ needButton: false });
   const data = result.data ?? [];
-  data.push({ value: 0, title: '主菜单' } as MenuTree);
+  data.push({ menuId: 0, title: '主菜单' } as MenuTree);
   menuData = data;
   // 编辑
   if (isPlainObject(record)) {

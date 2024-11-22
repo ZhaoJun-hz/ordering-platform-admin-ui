@@ -42,5 +42,9 @@ export interface MenuTree {
   children?: MenuTree[];
 }
 
+export interface MenuTreeReq {
+  needButton: boolean;
+}
+
 export type MenuInfoListResp = BaseListResp<MenuInfo>;
 export type MenuTreeResp = BaseListResp<MenuTree>;

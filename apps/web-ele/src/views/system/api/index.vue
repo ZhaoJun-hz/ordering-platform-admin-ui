@@ -28,12 +28,11 @@ const gridOptions: VxeGridProps<ApiInfo> = {
     },
     ajax: {
       query: async ({ page }, formValues) => {
-        const res = await getApiList({
-          page: page.currentPage,
+        return await getApiList({
+          pageNum: page.currentPage,
           pageSize: page.pageSize,
           ...formValues,
         });
-        return res;
       },
     },
   },

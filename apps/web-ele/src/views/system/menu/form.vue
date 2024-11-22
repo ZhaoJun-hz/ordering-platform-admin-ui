@@ -101,16 +101,19 @@ defineExpose(drawerApi);
       </template>
       <template #parentMenuId="props">
         <TreeSelect
-          v-model:select-value="record.parentMenuId"
-          :date="menuData"
+          v-model="record.parentMenuId"
+          :accordion="true"
+          :data="menuData"
           :default-props="{ label: 'title' }"
-          @on-init="
+          :multiple="false"
+          value-key="menuId"
+          @init="
             (nV: number) => {
               console.log(`TreeSelect init 更新value ${nV}`);
               props.setValue(nV);
             }
           "
-          @update:select-value="
+          @update:model-value="
             (newValue: number) => {
               console.log(`TreeSelect 更新value ${newValue}`);
               props.setValue(newValue);

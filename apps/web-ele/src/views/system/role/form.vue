@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import type { DeptInfo, DeptTree } from '#/api/sys/model/deptModel';
+import type { MenuTree } from '#/api/sys/model/menuModel';
+import type { RoleInfo } from '#/api/sys/model/roleModel';
 
 import { ref } from 'vue';
 
-import { useVbenDrawer } from '@vben/common-ui';
+import { useVbenDrawer, useVbenForm } from '@vben/common-ui';
 
 import { ElNotification } from 'element-plus';
 
-import { useVbenForm } from '#/adapter/form';
-import { createDept, updateDept } from '#/api/sys/dept';
+import { createRole, updateRole } from '#/api/sys/role';
 import InputNumber from '#/components/InputNumber.vue';
-import TreeSelect from '#/components/TreeSelect.vue';
+import Tree from '#/components/Tree.vue';
 
 import { dataFormSchemas } from './schemas';
 
 defineOptions({
-  name: 'DeptForm',
+  name: 'RoleForm',
 });
+
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-let deptData: DeptTree[] = [];
+let menuData: MenuTree[];
 
 const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
@@ -28,6 +29,7 @@ const [Form, formApi] = useVbenForm({
   schema: [...(dataFormSchemas.schema as any)],
   wrapperClass: 'grid-cols-2',
 });
+
 const [Drawer, drawerApi] = useVbenDrawer({
   onCancel() {
     drawerApi.close();
@@ -42,30 +44,30 @@ const [Drawer, drawerApi] = useVbenDrawer({
     isUpdate.value = drawerApi.getData()?.isUpdate;
     record.value = isOpen ? drawerApi.getData()?.record || {} : {};
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
-    deptData = drawerApi.getData()?.deptData;
+    menuData = drawerApi.getData()?.menuData;
     if (isOpen) {
       formApi.setValues(record.value);
     }
     drawerApi.setState({
-      title: isUpdate.value ? '编辑部门' : '新增部门',
+      title: isUpdate.value ? '编辑角色' : '新增角色',
     });
   },
 });
 
 async function onSubmit(values: Record<string, any>) {
   isUpdate.value
-    ? await updateDept(values as DeptInfo)
-    : await createDept(values as DeptInfo);
+    ? await updateRole(values as RoleInfo)
+    : await createRole(values as RoleInfo);
   ElNotification({
     title: 'Success',
-    message: `${isUpdate.value ? '编辑部门' : '新增部门'}操作成功`,
+    message: `${isUpdate.value ? '编辑角色' : '新增角色'}操作成功`,
     type: 'success',
   });
   gridApi.value.reload();
   drawerApi.close();
 }
-defineExpose(drawerApi);
 </script>
+
 <template>
   <Drawer
     :close-on-click-modal="false"
@@ -73,29 +75,6 @@ defineExpose(drawerApi);
     class="w-1/2"
   >
     <Form>
-      <template #parentDeptId="props">
-        <TreeSelect
-          v-model="record.parentDeptId"
-          :accordion="true"
-          :data="deptData"
-          :default-props="{ label: 'deptName' }"
-          :multiple="false"
-          value-key="deptId"
-          @init="
-            (nV: number) => {
-              console.log(`TreeSelect init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:model-value="
-            (newValue: number) => {
-              console.log(`TreeSelect 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
-
       <template #sort="props">
         <InputNumber
           v-model:input-number="record.sort"
@@ -108,6 +87,29 @@ defineExpose(drawerApi);
           @update:input-number="
             (newValue: number) => {
               console.log(`InputNumber 更新value ${newValue}`);
+              props.setValue(newValue);
+            }
+          "
+        />
+      </template>
+      <template #selectMenus="props">
+        <Tree
+          v-model="record.selectMenus"
+          :data="menuData"
+          :default-checked-keys="record.defaultSelectMenus"
+          :default-props="{ label: 'title' }"
+          :multiple="true"
+          :show-checkbox="true"
+          node-key="menuId"
+          @init="
+            (nV: number) => {
+              console.log(`TreeSelect init 更新value ${nV}`);
+              props.setValue(nV);
+            }
+          "
+          @update:model-value="
+            (newValue: number) => {
+              console.log(`TreeSelect 更新value ${newValue}`);
               props.setValue(newValue);
             }
           "
