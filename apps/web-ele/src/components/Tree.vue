@@ -11,6 +11,7 @@ interface ITreeProps {
   modelValue?: number | number[]; // 父组件传递的 v-model 初始值
   multiple?: boolean; // 是否多选
   nodeKey?: string;
+  expandOnClickNode: boolean; // 是否在点击节点的时候展开或者收缩节点， 默认值为 true，如果为 false，则只有点箭头图标的时候才会展开或者收缩节点。
 }
 const props = defineProps<ITreeProps>();
 const emit = defineEmits(['init', 'update:modelValue']);
@@ -27,7 +28,6 @@ const onCheckChange = () => {
     const checkedKeys = treeRef.value.getCheckedKeys() as number[]; // 调用 getCheckedKeys 方法
     const halfCheckedKeys = treeRef.value.getHalfCheckedKeys() as number[];
     selectValue.value = [...checkedKeys, ...halfCheckedKeys];
-    // selectValue.value = checkedKeys;
   }
 };
 
@@ -38,7 +38,6 @@ const onNodeClick = (node: any) => {
   if (value === undefined) return; // 如果值为 undefined，直接返回
 
   selectValue.value = props.multiple ? [value] : value;
-  // emit('update:modelValue', selectValue.value);
 };
 
 // 监听 `selectValue` 的变化，触发 `update:modelValue` 事件
@@ -58,6 +57,7 @@ onMounted(() => {
       v-model="selectValue"
       :data="props.data"
       :default-checked-keys="props.defaultCheckedKeys"
+      :expand-on-click-node="props.expandOnClickNode"
       :multiple="props.multiple"
       :node-key="props.nodeKey"
       :props="props.defaultProps"

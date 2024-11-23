@@ -24,6 +24,7 @@ import { tableColumns } from './schemas';
 
 // table
 const gridOptions: VxeGridProps<MenuInfo> = {
+  minHeight: 20,
   pagerConfig: {
     enabled: false,
   },

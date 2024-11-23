@@ -98,6 +98,7 @@ async function onSubmit(values: Record<string, any>) {
           :data="menuData"
           :default-checked-keys="record.defaultSelectMenus"
           :default-props="{ label: 'title' }"
+          :expand-on-click-node="false"
           :multiple="true"
           :show-checkbox="true"
           node-key="menuId"

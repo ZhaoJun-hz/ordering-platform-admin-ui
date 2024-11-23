@@ -14,6 +14,7 @@ import DeptForm from './form.vue';
 import { tableColumns } from './schemas';
 
 const gridOptions: VxeGridProps = {
+  minHeight: 20,
   pagerConfig: {
     enabled: false,
   },

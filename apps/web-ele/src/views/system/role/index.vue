@@ -23,6 +23,7 @@ const formOptions: VbenFormProps = {
 };
 
 const gridOptions: VxeGridProps = {
+  minHeight: 20,
   columns: [...(tableColumns.columns as any)],
   keepSource: true,
   pagerConfig: {},
@@ -90,7 +91,7 @@ async function handlerDeleteRole(record: any) {
 </script>
 
 <template>
-  <Page>
+  <Page auto-content-height>
     <Grid>
       <template #toolbar_buttons>
         <AccessControl :codes="['super admin']">
