@@ -58,6 +58,7 @@ onMounted(() => {
       :data="props.data"
       :default-checked-keys="props.defaultCheckedKeys"
       :expand-on-click-node="props.expandOnClickNode"
+      :highlight-current="true"
       :multiple="props.multiple"
       :node-key="props.nodeKey"
       :props="props.defaultProps"

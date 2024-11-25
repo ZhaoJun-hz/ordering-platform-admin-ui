@@ -35,7 +35,7 @@ export const tableColumns: VxeGridProps = {
           return h(
             ElTag,
             {
-              type: record.row.type === 'SYS' ? 'danger' : 'primary',
+              type: record.row.status === 1 ? 'danger' : 'primary',
             },
             () => resultText,
           );

@@ -30,6 +30,8 @@ import {
   ElUpload,
 } from 'element-plus';
 
+import Select from '#/components/Select.vue';
+
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
   type: 'input' | 'select',
@@ -44,6 +46,7 @@ const withDefaultPlaceholder = <T extends Component>(
 export type ComponentType =
   | 'Checkbox'
   | 'CheckboxGroup'
+  | 'CustomSelect'
   | 'DatePicker'
   | 'Divider'
   | 'Input'
@@ -78,6 +81,7 @@ async function initComponentAdapter() {
     InputNumber: withDefaultPlaceholder(ElInputNumber, 'input'),
     RadioGroup: ElRadioGroup,
     Select: withDefaultPlaceholder(ElSelect, 'select'),
+    CustomSelect: Select,
     Space: ElSpace,
     Switch: ElSwitch,
     TimePicker: ElTimePicker,

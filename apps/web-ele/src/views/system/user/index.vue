@@ -1,27 +1,108 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import { Page } from '@vben/common-ui';
+import { AccessControl } from '@vben/access';
+import { Page, useVbenDrawer, type VbenFormProps } from '@vben/common-ui';
 
-import { ElCard, ElCol, ElRow } from 'element-plus';
+import {
+  ElButton,
+  ElCard,
+  ElCol,
+  ElPopconfirm,
+  ElRow,
+  ElTooltip,
+} from 'element-plus';
+import { isPlainObject } from 'remeda';
 
+import { useVbenVxeGrid, type VxeGridProps } from '#/adapter/vxe-table';
 import { getDeptTree } from '#/api/sys/dept';
+import { deleteUser, getUserList } from '#/api/sys/user';
 import Tree from '#/components/Tree.vue';
 
+import UserForm from './form.vue';
+import { searchFormSchemas, tableColumns } from './schemas';
+
 const deptData = ref();
+const selectedDeptId = ref();
 async function fetchDeptData() {
   const result = await getDeptTree();
   deptData.value = result.data;
+  // selectedDeptId.value = result.data[0]?.deptId;
 }
 
 onMounted(async () => {
   await fetchDeptData();
 });
+
+const formOptions: VbenFormProps = {
+  collapsed: true,
+  schema: [...(searchFormSchemas.schema as any)],
+  showCollapseButton: true,
+  submitOnEnter: false,
+};
+
+const gridOptions: VxeGridProps = {
+  minHeight: 20,
+  columns: [...(tableColumns.columns as any)],
+  keepSource: true,
+  pagerConfig: {},
+  toolbarConfig: {
+    slots: {
+      buttons: 'toolbar_buttons',
+    },
+  },
+  proxyConfig: {
+    response: {
+      result: 'data',
+    },
+    ajax: {
+      query: async ({ page }, formValues) => {
+        return await getUserList({
+          pageNum: page.currentPage,
+          pageSize: page.pageSize,
+          deptId: selectedDeptId.value,
+          ...formValues,
+        });
+      },
+    },
+  },
+};
+
+const [Grid, gridApi] = useVbenVxeGrid({
+  formOptions,
+  gridOptions,
+});
+
+const [Drawer, drawerApi] = useVbenDrawer({
+  connectedComponent: UserForm,
+});
+
+async function openFormDrawer(record: any) {
+  // 编辑
+  if (isPlainObject(record)) {
+    drawerApi.setData({
+      record,
+      gridApi,
+      isUpdate: true,
+    });
+  } else {
+    // 新增
+    drawerApi.setData({
+      gridApi,
+      isUpdate: false,
+    });
+  }
+  drawerApi.open();
+}
+async function handlerDeleteRole(record: any) {
+  await deleteUser(record.roleId as number);
+  gridApi.reload();
+}
 </script>
 
 <template>
   <ElRow>
-    <ElCol :span="6">
+    <ElCol :span="4">
       <Page auto-content-height>
         <ElCard class="h-full">
           <template #header>
@@ -36,15 +117,49 @@ onMounted(async () => {
             node-key="deptId"
             @update:model-value="
               (newValue: number) => {
-                console.log(`Tree 更新value ${newValue}`);
+                selectedDeptId = newValue;
+                gridApi.reload();
               }
             "
           />
         </ElCard>
       </Page>
     </ElCol>
-    <ElCol :span="18">
-      <Page auto-content-height> 用户11111111 </Page>
+    <ElCol :span="20">
+      <Page auto-content-height>
+        <Grid>
+          <template #toolbar_buttons>
+            <AccessControl :codes="['super admin']">
+              <ElButton type="success" @click="openFormDrawer">
+                新增角色
+              </ElButton>
+            </AccessControl>
+          </template>
+          <template #action="{ row }">
+            <ElTooltip class="box-item" content="编辑" placement="top">
+              <ElButton round type="primary" @click="openFormDrawer(row)">
+                <span class="icon-[ep--edit]"></span>
+              </ElButton>
+            </ElTooltip>
+
+            <ElTooltip class="box-item" content="删除" placement="top">
+              <span>
+                <ElPopconfirm
+                  title="确定删除么?"
+                  @confirm="handlerDeleteRole(row)"
+                >
+                  <template #reference>
+                    <ElButton round type="danger">
+                      <span class="icon-[ep--delete]"></span>
+                    </ElButton>
+                  </template>
+                </ElPopconfirm>
+              </span>
+            </ElTooltip>
+          </template>
+        </Grid>
+        <Drawer />
+      </Page>
     </ElCol>
   </ElRow>
 </template>
