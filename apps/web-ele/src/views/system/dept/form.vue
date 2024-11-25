@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DeptInfo, DeptTree } from '#/api/sys/model/deptModel';
+import type { DeptInfo } from '#/api/sys/model/deptModel';
 
 import { ref } from 'vue';
 
@@ -10,7 +10,6 @@ import { ElNotification } from 'element-plus';
 import { useVbenForm } from '#/adapter/form';
 import { createDept, updateDept } from '#/api/sys/dept';
 import InputNumber from '#/components/InputNumber.vue';
-import TreeSelect from '#/components/TreeSelect.vue';
 
 import { dataFormSchemas } from './schemas';
 
@@ -20,7 +19,7 @@ defineOptions({
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-let deptData: DeptTree[] = [];
+// let deptData: DeptTree[] = [];
 
 const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
@@ -42,7 +41,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
     isUpdate.value = drawerApi.getData()?.isUpdate;
     record.value = isOpen ? drawerApi.getData()?.record || {} : {};
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
-    deptData = drawerApi.getData()?.deptData;
+    // deptData = drawerApi.getData()?.deptData;
     if (isOpen) {
       formApi.setValues(record.value);
     }
@@ -73,29 +72,6 @@ defineExpose(drawerApi);
     class="w-1/2"
   >
     <Form>
-      <template #parentDeptId="props">
-        <TreeSelect
-          v-model="record.parentDeptId"
-          :accordion="true"
-          :data="deptData"
-          :default-props="{ label: 'deptName' }"
-          :multiple="false"
-          value-key="deptId"
-          @init="
-            (nV: number) => {
-              console.log(`TreeSelect init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:model-value="
-            (newValue: number) => {
-              console.log(`TreeSelect 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
-
       <template #sort="props">
         <InputNumber
           v-model:input-number="record.sort"

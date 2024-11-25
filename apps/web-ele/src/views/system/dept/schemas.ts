@@ -5,6 +5,8 @@ import { h } from 'vue';
 
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { getDeptTree } from '#/api/sys/dept';
+
 export const tableColumns: VxeGridProps = {
   columns: [
     {
@@ -81,12 +83,26 @@ export const dataFormSchemas: VbenFormProps = {
       rules: 'required',
     },
     {
-      component: 'Input',
+      component: 'CustomTreeSelect',
       fieldName: 'parentDeptId',
       label: '上级部门',
-      componentProps: {},
+      componentProps: {
+        api: getDeptTree,
+        params: {},
+        resultField: 'data',
+        valueField: 'deptId',
+        labelField: 'deptName',
+        accordion: true,
+        expandOnClickNode: false,
+        appendData: {
+          label: '主部门',
+          value: 0,
+        },
+        // defaultValue: 0,
+      },
       rules: 'required',
       help: '指当前部门归属的部门',
+      defaultValue: 0,
     },
     {
       component: 'Input',

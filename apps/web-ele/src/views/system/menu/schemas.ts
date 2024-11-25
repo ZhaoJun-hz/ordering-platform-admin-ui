@@ -6,6 +6,8 @@ import { h } from 'vue';
 import { Icon } from '@iconify/vue';
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { getMenuTree } from '#/api/sys/menu';
+
 export const tableColumns: VxeGridProps = {
   columns: [
     { title: '菜单标题', field: 'title', treeNode: true },
@@ -148,12 +150,28 @@ export const dataFormSchemas: VbenFormProps = {
     },
     // 上级菜单
     {
-      component: 'Input',
+      component: 'CustomTreeSelect',
       fieldName: 'parentMenuId',
       label: '上级菜单',
-      componentProps: {},
+      componentProps: {
+        api: getMenuTree,
+        params: {
+          needButton: false,
+        },
+        resultField: 'data',
+        valueField: 'menuId',
+        labelField: 'title',
+        accordion: true,
+        expandOnClickNode: false,
+        appendData: {
+          label: '主菜单',
+          value: 0,
+        },
+        // defaultValue: 0,
+      },
       rules: 'required',
       help: '指当前菜单停靠的菜单归属',
+      defaultValue: 0,
     },
     // 菜单图标
     {

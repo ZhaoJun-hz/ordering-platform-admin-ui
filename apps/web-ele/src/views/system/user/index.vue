@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { DeptTree } from '#/api/sys/model/deptModel';
+
 import { onMounted, ref } from 'vue';
 
 import { AccessControl } from '@vben/access';
@@ -22,7 +24,7 @@ import Tree from '#/components/Tree.vue';
 import UserForm from './form.vue';
 import { searchFormSchemas, tableColumns } from './schemas';
 
-const deptData = ref();
+const deptData = ref<DeptTree[]>([]);
 const selectedDeptId = ref();
 async function fetchDeptData() {
   const result = await getDeptTree();
@@ -94,8 +96,8 @@ async function openFormDrawer(record: any) {
   }
   drawerApi.open();
 }
-async function handlerDeleteRole(record: any) {
-  await deleteUser(record.roleId as number);
+async function handlerDeleteUser(record: any) {
+  await deleteUser(record.userId as number);
   gridApi.reload();
 }
 </script>
@@ -146,7 +148,7 @@ async function handlerDeleteRole(record: any) {
               <span>
                 <ElPopconfirm
                   title="确定删除么?"
-                  @confirm="handlerDeleteRole(row)"
+                  @confirm="handlerDeleteUser(row)"
                 >
                   <template #reference>
                     <ElButton round type="danger">

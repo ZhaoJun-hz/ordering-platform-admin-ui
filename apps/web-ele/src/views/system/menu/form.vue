@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MenuInfo, MenuTree } from '#/api/sys/model/menuModel';
+import type { MenuInfo } from '#/api/sys/model/menuModel';
 
 import { ref } from 'vue';
 
@@ -12,7 +12,6 @@ import { createMenu, updateMenu } from '#/api/sys/menu';
 import ApiSelect from '#/components/ApiSelect.vue';
 import IconPicker from '#/components/IconSelect/icon-picker.vue';
 import InputNumber from '#/components/InputNumber.vue';
-import TreeSelect from '#/components/TreeSelect.vue';
 
 import { dataFormSchemas } from './schemas';
 
@@ -22,7 +21,6 @@ defineOptions({
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-let menuData: MenuTree[];
 let apiData: { key: number; label: string }[];
 
 const [Form, formApi] = useVbenForm({
@@ -46,7 +44,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
     isUpdate.value = drawerApi.getData()?.isUpdate;
     record.value = isOpen ? drawerApi.getData()?.record || {} : {};
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
-    menuData = drawerApi.getData()?.menuData;
     apiData = drawerApi.getData()?.apiData;
     if (isOpen) {
       formApi.setValues(record.value);
@@ -99,28 +96,7 @@ defineExpose(drawerApi);
           "
         />
       </template>
-      <template #parentMenuId="props">
-        <TreeSelect
-          v-model="record.parentMenuId"
-          :accordion="true"
-          :data="menuData"
-          :default-props="{ label: 'title' }"
-          :multiple="false"
-          value-key="menuId"
-          @init="
-            (nV: number) => {
-              console.log(`TreeSelect init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:model-value="
-            (newValue: number) => {
-              console.log(`TreeSelect 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
+
       <template #icon="props">
         <IconPicker
           v-model:icon-value="record.icon"

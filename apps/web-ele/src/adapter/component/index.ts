@@ -31,6 +31,7 @@ import {
 } from 'element-plus';
 
 import Select from '#/components/Select.vue';
+import TreeSelect from '#/components/TreeSelect.vue';
 
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
@@ -47,6 +48,7 @@ export type ComponentType =
   | 'Checkbox'
   | 'CheckboxGroup'
   | 'CustomSelect'
+  | 'CustomTreeSelect'
   | 'DatePicker'
   | 'Divider'
   | 'Input'
@@ -82,6 +84,7 @@ async function initComponentAdapter() {
     RadioGroup: ElRadioGroup,
     Select: withDefaultPlaceholder(ElSelect, 'select'),
     CustomSelect: Select,
+    CustomTreeSelect: TreeSelect,
     Space: ElSpace,
     Switch: ElSwitch,
     TimePicker: ElTimePicker,

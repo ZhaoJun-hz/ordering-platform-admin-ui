@@ -19,7 +19,7 @@ const emit = defineEmits(['init', 'update:modelValue']);
 // 绑定 ElTree 的实例
 const treeRef = ref<InstanceType<typeof ElTree> | null>(null);
 
-const selectValue = ref<null | number | number[]>(props.modelValue ?? null);
+const selectValue = ref<null | number | number[]>(props.modelValue ?? []);
 
 // 监听节点勾选状态变化
 const onCheckChange = () => {

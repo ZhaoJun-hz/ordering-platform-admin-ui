@@ -5,6 +5,7 @@ import { h } from 'vue';
 
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { getDeptTree } from '#/api/sys/dept';
 import { getRoleList } from '#/api/sys/role';
 
 export const tableColumns: VxeGridProps = {
@@ -80,6 +81,7 @@ export const searchFormSchemas: VbenFormProps = {
         valueField: 'roleId',
         multiple: true,
       },
+      defaultValue: 0,
     },
     {
       fieldName: 'nickname',
@@ -145,6 +147,29 @@ export const dataFormSchemas: VbenFormProps = {
         valueField: 'roleId',
         multiple: true,
       },
+      defaultValue: 0,
+      rules: 'required',
+    },
+    {
+      component: 'CustomTreeSelect',
+      fieldName: 'deptId',
+      label: '部门',
+      componentProps: {
+        api: getDeptTree,
+        params: {},
+        resultField: 'data',
+        valueField: 'deptId',
+        labelField: 'deptName',
+        accordion: true,
+        expandOnClickNode: false,
+        appendData: {
+          label: '主部门',
+          value: 0,
+        },
+        // defaultValue: 0,
+      },
+      rules: 'required',
+      defaultValue: 0,
     },
     {
       component: 'Input',

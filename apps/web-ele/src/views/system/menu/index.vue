@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { VxeGridProps } from '#/adapter/vxe-table';
-import type { MenuInfo, MenuTree } from '#/api/sys/model/menuModel';
+import type { MenuInfo } from '#/api/sys/model/menuModel';
 
 import { onMounted } from 'vue';
 
@@ -12,12 +12,7 @@ import { isPlainObject } from 'remeda';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getApiList } from '#/api/sys/api';
-import {
-  deleteMenu,
-  getMenuInfo,
-  getMenuList,
-  getMenuTree,
-} from '#/api/sys/menu';
+import { deleteMenu, getMenuInfo, getMenuList } from '#/api/sys/menu';
 
 import MenuForm from './form.vue';
 import { tableColumns } from './schemas';
@@ -50,7 +45,6 @@ const gridOptions: VxeGridProps<MenuInfo> = {
     },
   },
 };
-let menuData: MenuTree[] = [];
 let apiData: { key: number; label: string }[] = [];
 const [Grid, gridApi] = useVbenVxeGrid({ gridOptions });
 
@@ -59,10 +53,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 async function openFormDrawer(record: any) {
-  const result = await getMenuTree({ needButton: false });
-  const data = result.data ?? [];
-  data.push({ menuId: 0, title: '主菜单' } as MenuTree);
-  menuData = data;
   // 编辑
   if (isPlainObject(record)) {
     const result = await getMenuInfo(record.menuId as number);
@@ -71,7 +61,6 @@ async function openFormDrawer(record: any) {
       record,
       gridApi,
       isUpdate: true,
-      menuData,
       apiData,
     });
   } else {
@@ -80,7 +69,6 @@ async function openFormDrawer(record: any) {
       record: { sort: 10, parentMenuId: 0 },
       gridApi,
       isUpdate: false,
-      menuData,
       apiData,
     });
   }
