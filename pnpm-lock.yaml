@@ -32,7 +32,7 @@ catalogs:
       version: 9.2.0
     '@iconify/json':
       specifier: ^2.2.275
-      version: 2.2.275
+      version: 2.2.276
     '@iconify/tailwind':
       specifier: ^1.1.3
       version: 1.1.3
@@ -74,7 +74,7 @@ catalogs:
       version: 5.61.3
     '@tanstack/vue-store':
       specifier: ^0.5.7
-      version: 0.5.7
+      version: 0.5.8
     '@types/archiver':
       specifier: ^6.0.3
       version: 6.0.3
@@ -351,6 +351,9 @@ catalogs:
     radix-vue:
       specifier: ^1.9.10
       version: 1.9.10
+    remeda:
+      specifier: ^2.17.3
+      version: 2.17.3
     resolve.exports:
       specifier: ^2.0.2
       version: 2.0.2
@@ -398,7 +401,7 @@ catalogs:
       version: 6.10.0
     tailwind-merge:
       specifier: ^2.5.4
-      version: 2.5.4
+      version: 2.5.5
     tailwindcss:
       specifier: ^3.4.15
       version: 3.4.15
@@ -467,10 +470,10 @@ catalogs:
       version: 2.1.10
     vxe-pc-ui:
       specifier: ^4.3.4
-      version: 4.3.4
+      version: 4.3.6
     vxe-table:
       specifier: ^4.9.5
-      version: 4.9.5
+      version: 4.9.8
     watermark-js-plus:
       specifier: ^1.5.7
       version: 1.5.7
@@ -676,6 +679,9 @@ importers:
 
   apps/web-ele:
     dependencies:
+      '@iconify/vue':
+        specifier: 'catalog:'
+        version: 4.1.2(vue@3.5.13(typescript@5.7.2))
       '@vben/access':
         specifier: workspace:*
         version: link:../../packages/effects/access
@@ -730,6 +736,9 @@ importers:
       pinia:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.7.2)(vue@3.5.13(typescript@5.7.2))
+      remeda:
+        specifier: 'catalog:'
+        version: 2.17.3
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.2)
@@ -1039,7 +1048,7 @@ importers:
     dependencies:
       '@iconify/json':
         specifier: 'catalog:'
-        version: 2.2.275
+        version: 2.2.276
       '@iconify/tailwind':
         specifier: 'catalog:'
         version: 1.1.3
@@ -1193,7 +1202,7 @@ importers:
         version: 4.1.0
       '@tanstack/vue-store':
         specifier: 'catalog:'
-        version: 0.5.7(vue@3.5.13(typescript@5.7.2))
+        version: 0.5.8(vue@3.5.13(typescript@5.7.2))
       '@vue/shared':
         specifier: 'catalog:'
         version: 3.5.13
@@ -1214,7 +1223,7 @@ importers:
         version: 0.2.0
       tailwind-merge:
         specifier: 'catalog:'
-        version: 2.5.4
+        version: 2.5.5
       theme-colors:
         specifier: 'catalog:'
         version: 0.1.0
@@ -1628,10 +1637,10 @@ importers:
         version: 3.5.13(typescript@5.7.2)
       vxe-pc-ui:
         specifier: 'catalog:'
-        version: 4.3.4(vue@3.5.13(typescript@5.7.2))
+        version: 4.3.6(vue@3.5.13(typescript@5.7.2))
       vxe-table:
         specifier: 'catalog:'
-        version: 4.9.5(vue@3.5.13(typescript@5.7.2))
+        version: 4.9.8(vue@3.5.13(typescript@5.7.2))
 
   packages/effects/request:
     dependencies:
@@ -3572,14 +3581,14 @@ packages:
   '@iconify-json/octicon@1.2.1':
     resolution: {integrity: sha512-4w7yMipQtp6s6aCHrSVlVXsf0OCBQ8CRmUTkMQUBexR42SXl4z5GnaUyaOMVoZttfgaBNnj0mlMB5T1cmRDgTg==}
 
-  '@iconify-json/simple-icons@1.2.12':
-    resolution: {integrity: sha512-lRNORrIdeLStShxAjN6FgXE1iMkaAgiAHZdP0P0GZecX91FVYW58uZnRSlXLlSx5cxMoELulkAAixybPA2g52g==}
+  '@iconify-json/simple-icons@1.2.13':
+    resolution: {integrity: sha512-rRQjMoIt/kPfaD+fnBC9YZQpso3hkn8xPeadl+YWhscJ5SVUCdB9oTeR9VIpt+/5Yi8vEkh2UOWFPq4lz3ee2A==}
 
   '@iconify-json/vscode-icons@1.2.2':
     resolution: {integrity: sha512-bTpT0HJDRqGkxQv8oiETNHLEnBZpnA1QaRD35CQyO7M7qgWVLx2xwn/lK6e4waojmlPC3ckMBx3WFIUUn0/Jdg==}
 
-  '@iconify/json@2.2.275':
-    resolution: {integrity: sha512-eiw64zix2sLUoZWjEJAwe0EU/wtZPww3h4NOEdqXgyiLmV400MXbOB7A+osZDuNPIP1Iapxab+r1mxW75dTWEw==}
+  '@iconify/json@2.2.276':
+    resolution: {integrity: sha512-YXCcFQSgFTj/3rlK6Vlv9T5suFjWBQu5dt9k/aYbje/U21jNp7P2xf0CPiAn8iItU/9uDj9mi3UsITMShqeCug==}
 
   '@iconify/tailwind@1.1.3':
     resolution: {integrity: sha512-SfyeT+2b/aKWA6DjwdevXdLUqaEqJ5xWTegD92KItaWc47IYsGuqrt/GOz4dJCPcTVCrsUjlvMpy8cNd+uV5nQ==}
@@ -4227,8 +4236,8 @@ packages:
       '@vue/composition-api':
         optional: true
 
-  '@tanstack/vue-store@0.5.7':
-    resolution: {integrity: sha512-cDMdpHZQJzpatsX9RbL/+AT/pCW1DPm4fqNLF44Y+NQgWUHNyNUya6by/T2e6nLiu7Xxd7kn//PiS/fq1kbC4A==}
+  '@tanstack/vue-store@0.5.8':
+    resolution: {integrity: sha512-IXz/HLF3zwSmP6V9nenYIDGdW0BObsJEx8rwoTJet5l3dNhL8DKOIY18nHu39Zb9pKkV4UUv/94bO6HzT9wcKg==}
     peerDependencies:
       '@vue/composition-api': ^1.2.1
       vue: ^3.5.13
@@ -7845,8 +7854,8 @@ packages:
     resolution: {integrity: sha512-ua1L4OgXSBdsu1FPb7F3tYH0F48a6kxvod4pLUlGY9COeJAJQNX/sNH2IiEmsxw7lqYiAwrdHMjz1FctOsyDQg==}
     engines: {node: '>=18'}
 
-  package-manager-detector@0.2.4:
-    resolution: {integrity: sha512-H/OUu9/zUfP89z1APcBf2X8Us0tt8dUK4lUmKqz12QNXif3DxAs1/YqjGtcutZi1zQqeNQRWr9C+EbQnnvSSFA==}
+  package-manager-detector@0.2.5:
+    resolution: {integrity: sha512-3dS7y28uua+UDbRCLBqltMBrbI+A5U2mI9YuxHRxIWYmLj3DwntEBmERYzIAQ4DMeuCUOBSak7dBHHoXKpOTYQ==}
 
   param-case@3.0.4:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
@@ -8730,6 +8739,9 @@ packages:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
 
+  remeda@2.17.3:
+    resolution: {integrity: sha512-xyi2rCQkz2j4BEWbWxPw6JCapv1yBuSwr4Uf9BX00AkesAJaiKvc6Il6thsBidwVZAtNiSaCIXvslkKL0ybz8w==}
+
   remove-accents@0.5.0:
     resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
@@ -9332,8 +9344,8 @@ packages:
     resolution: {integrity: sha512-w2sfv80nrAh2VCbqR5AK27wswXhqcck2AhfnNW76beQXskGZ1V12GwS//yYVa3d3fcvAip2OUnbDAjW2k3v9fA==}
     engines: {node: '>=10.0.0'}
 
-  tailwind-merge@2.5.4:
-    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
+  tailwind-merge@2.5.5:
+    resolution: {integrity: sha512-0LXunzzAZzo0tEPxV3I297ffKZPlKDrjj7NXphC8V5ak9yHC5zRmxnOe2m/Rd/7ivsOMJe3JZ2JVocoDdQTRBA==}
 
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
@@ -9447,8 +9459,8 @@ packages:
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
 
-  ts-api-utils@1.4.0:
-    resolution: {integrity: sha512-032cPxaEKwM+GT3vA5JXNzIaizx388rhsSW79vGRNGXfRRAdEAn2mvk36PvK5HnOchyWZ7afLEXqYCvPCrzuzQ==}
+  ts-api-utils@1.4.1:
+    resolution: {integrity: sha512-5RU2/lxTA3YUZxju61HO2U6EoZLvBLtmV2mbTvqyu4a/7s7RmJPT+1YekhMVsQhznRWk/czIwDUg+V8Q9ZuG4w==}
     engines: {node: '>=16'}
     peerDependencies:
       typescript: '>=4.2.0'
@@ -9957,11 +9969,11 @@ packages:
     peerDependencies:
       vue: ^3.5.13
 
-  vxe-pc-ui@4.3.4:
-    resolution: {integrity: sha512-LDQiH6n40OSqeBvnnnIqifEXOMz1lJS7NQT6wjCNeeXKwVudFC8sbwO9TcfPVYZBqvWseJ5/SvYOjh3KJ376yw==}
+  vxe-pc-ui@4.3.6:
+    resolution: {integrity: sha512-ka+cE9o94jwxOjqh/sMyYKS3gPJea/OZ5Zx1fp2fzUYo9By/6boUIdUsbQ1QZkJAHgc0HKmNEMRKurtlQb7Fsg==}
 
-  vxe-table@4.9.5:
-    resolution: {integrity: sha512-s4/5NX4coVYNXTCewatZ5q47Z47bpknE4HSvjG1tLhgirOQwbBqIInUJKbkgLTz0cNRQXWaBysxwIQawO/6UbA==}
+  vxe-table@4.9.8:
+    resolution: {integrity: sha512-bP1TkBNJmn3TNVSUl+Vk2mVq+u4S6WouewfV01608riISNGM9haoM+7LW++bE6AzmuwFU3SJUxyF0So0huLkzg==}
 
   warning@4.0.3:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}
@@ -10351,7 +10363,7 @@ snapshots:
 
   '@antfu/install-pkg@0.4.1':
     dependencies:
-      package-manager-detector: 0.2.4
+      package-manager-detector: 0.2.5
       tinyexec: 0.3.1
 
   '@antfu/utils@0.7.10': {}
@@ -11173,7 +11185,7 @@ snapshots:
       fs-extra: 7.0.1
       mri: 1.2.0
       p-limit: 2.3.0
-      package-manager-detector: 0.2.4
+      package-manager-detector: 0.2.5
       picocolors: 1.1.1
       resolve-from: 5.0.0
       semver: 7.6.3
@@ -12139,7 +12151,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/simple-icons@1.2.12':
+  '@iconify-json/simple-icons@1.2.13':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -12147,7 +12159,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.275':
+  '@iconify/json@2.2.276':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -12970,7 +12982,7 @@ snapshots:
       vue: 3.5.13(typescript@5.7.2)
       vue-demi: 0.14.10(vue@3.5.13(typescript@5.7.2))
 
-  '@tanstack/vue-store@0.5.7(vue@3.5.13(typescript@5.7.2))':
+  '@tanstack/vue-store@0.5.8(vue@3.5.13(typescript@5.7.2))':
     dependencies:
       '@tanstack/store': 0.5.5
       vue: 3.5.13(typescript@5.7.2)
@@ -13108,7 +13120,7 @@ snapshots:
       graphemer: 1.4.0
       ignore: 5.3.2
       natural-compare: 1.4.0
-      ts-api-utils: 1.4.0(typescript@5.7.2)
+      ts-api-utils: 1.4.1(typescript@5.7.2)
     optionalDependencies:
       typescript: 5.7.2
     transitivePeerDependencies:
@@ -13143,7 +13155,7 @@ snapshots:
       '@typescript-eslint/utils': 8.15.0(eslint@9.15.0(jiti@2.4.0))(typescript@5.7.2)
       debug: 4.3.7(supports-color@9.4.0)
       eslint: 9.15.0(jiti@2.4.0)
-      ts-api-utils: 1.4.0(typescript@5.7.2)
+      ts-api-utils: 1.4.1(typescript@5.7.2)
     optionalDependencies:
       typescript: 5.7.2
     transitivePeerDependencies:
@@ -13162,7 +13174,7 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.6.3
-      ts-api-utils: 1.4.0(typescript@5.7.2)
+      ts-api-utils: 1.4.1(typescript@5.7.2)
     optionalDependencies:
       typescript: 5.7.2
     transitivePeerDependencies:
@@ -13177,7 +13189,7 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.6.3
-      ts-api-utils: 1.4.0(typescript@5.7.2)
+      ts-api-utils: 1.4.1(typescript@5.7.2)
     optionalDependencies:
       typescript: 5.7.2
     transitivePeerDependencies:
@@ -17115,7 +17127,7 @@ snapshots:
       registry-url: 6.0.1
       semver: 7.6.3
 
-  package-manager-detector@0.2.4: {}
+  package-manager-detector@0.2.5: {}
 
   param-case@3.0.4:
     dependencies:
@@ -17971,6 +17983,10 @@ snapshots:
 
   relateurl@0.2.7: {}
 
+  remeda@2.17.3:
+    dependencies:
+      type-fest: 4.28.0
+
   remove-accents@0.5.0: {}
 
   repeat-string@1.6.1: {}
@@ -18647,7 +18663,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwind-merge@2.5.4: {}
+  tailwind-merge@2.5.5: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.15):
     dependencies:
@@ -18770,7 +18786,7 @@ snapshots:
 
   trim-lines@3.0.1: {}
 
-  ts-api-utils@1.4.0(typescript@5.7.2):
+  ts-api-utils@1.4.1(typescript@5.7.2):
     dependencies:
       typescript: 5.7.2
 
@@ -19265,7 +19281,7 @@ snapshots:
     dependencies:
       '@docsearch/css': 3.8.0
       '@docsearch/js': 3.8.0(@algolia/client-search@5.15.0)(search-insights@2.17.3)
-      '@iconify-json/simple-icons': 1.2.12
+      '@iconify-json/simple-icons': 1.2.13
       '@shikijs/core': 1.23.1
       '@shikijs/transformers': 1.23.1
       '@shikijs/types': 1.23.1
@@ -19430,15 +19446,15 @@ snapshots:
       vooks: 0.2.12(vue@3.5.13(typescript@5.7.2))
       vue: 3.5.13(typescript@5.7.2)
 
-  vxe-pc-ui@4.3.4(vue@3.5.13(typescript@5.7.2)):
+  vxe-pc-ui@4.3.6(vue@3.5.13(typescript@5.7.2)):
     dependencies:
       '@vxe-ui/core': 4.0.17(vue@3.5.13(typescript@5.7.2))
     transitivePeerDependencies:
       - vue
 
-  vxe-table@4.9.5(vue@3.5.13(typescript@5.7.2)):
+  vxe-table@4.9.8(vue@3.5.13(typescript@5.7.2)):
     dependencies:
-      vxe-pc-ui: 4.3.4(vue@3.5.13(typescript@5.7.2))
+      vxe-pc-ui: 4.3.6(vue@3.5.13(typescript@5.7.2))
     transitivePeerDependencies:
       - vue
 

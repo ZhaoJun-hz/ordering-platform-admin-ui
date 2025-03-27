@@ -99,23 +99,28 @@ async function handlerDeleteRole(record: any) {
         </AccessControl>
       </template>
       <template #action="{ row }">
-        <ElTooltip class="box-item" content="编辑" placement="top">
-          <ElButton round type="primary" @click="openFormDrawer(row)">
-            <span class="icon-[ep--edit]"></span>
-          </ElButton>
-        </ElTooltip>
+        <div class="flex items-center justify-center space-x-4">
+          <ElTooltip class="box-item" content="编辑" placement="top">
+            <ElButton circle type="primary" @click="openFormDrawer(row)">
+              <span class="icon-[ep--edit]"></span>
+            </ElButton>
+          </ElTooltip>
 
-        <ElTooltip class="box-item" content="删除" placement="top">
-          <span>
-            <ElPopconfirm title="确定删除么?" @confirm="handlerDeleteRole(row)">
-              <template #reference>
-                <ElButton round type="danger">
-                  <span class="icon-[ep--delete]"></span>
-                </ElButton>
-              </template>
-            </ElPopconfirm>
-          </span>
-        </ElTooltip>
+          <ElTooltip class="box-item" content="删除" placement="top">
+            <span>
+              <ElPopconfirm
+                title="确定删除么?"
+                @confirm="handlerDeleteRole(row)"
+              >
+                <template #reference>
+                  <ElButton circle type="danger">
+                    <span class="icon-[ep--delete]"></span>
+                  </ElButton>
+                </template>
+              </ElPopconfirm>
+            </span>
+          </ElTooltip>
+        </div>
       </template>
     </Grid>
     <Drawer />

@@ -209,12 +209,12 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'selectMenus',
       label: '菜单权限',
       formItemClass: 'col-span-2',
-      dependencies: {
-        show(values) {
-          return !values.admin;
-        },
-        triggerFields: ['admin'],
-      },
+      // dependencies: {
+      //   show(values) {
+      //     return !values.admin;
+      //   },
+      //   triggerFields: ['admin'],
+      // },
     },
   ],
 };

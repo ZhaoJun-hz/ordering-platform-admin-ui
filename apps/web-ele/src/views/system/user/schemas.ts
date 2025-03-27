@@ -34,11 +34,11 @@ export const tableColumns: VxeGridProps = {
       slots: {
         default: (record) => {
           let resultText = '';
-          resultText = record.row.status === 1 ? '停用' : '启用';
+          resultText = record.row.status === 1 ? '启用' : '停用';
           return h(
             ElTag,
             {
-              type: record.row.status === 1 ? 'danger' : 'primary',
+              type: record.row.status === 1 ? 'primary' : 'danger',
             },
             () => resultText,
           );
