@@ -42,6 +42,17 @@ const [Drawer, drawerApi] = useVbenDrawer({
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
     if (isOpen) {
       formApi.setValues(record.value);
+      // 动态设置密码验证规则
+      formApi.updateSchema([
+        {
+          fieldName: 'password',
+          rules: isUpdate.value ? '' : 'required',
+          componentProps: {
+            // 可选：编辑时显示 placeholder 提示
+            placeholder: isUpdate.value ? '留空不修改密码' : '请输入密码',
+          },
+        },
+      ]);
     }
     drawerApi.setState({
       title: isUpdate.value ? '编辑用户' : '新增用户',

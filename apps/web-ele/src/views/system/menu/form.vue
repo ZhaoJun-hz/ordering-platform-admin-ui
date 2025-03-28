@@ -55,6 +55,10 @@ const [Drawer, drawerApi] = useVbenDrawer({
 });
 
 async function onSubmit(values: Record<string, any>) {
+  if (isUpdate.value && !values.password) {
+    delete values.password; // 编辑时如果密码为空则删除该字段
+  }
+
   isUpdate.value
     ? await updateMenu(values as MenuInfo)
     : await createMenu(values as MenuInfo);

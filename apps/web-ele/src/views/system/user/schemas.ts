@@ -129,7 +129,7 @@ export const dataFormSchemas: VbenFormProps = {
       },
       fieldName: 'password',
       label: '密码',
-      rules: 'required',
+      // rules: 'required',
     },
     {
       fieldName: 'roleId',
