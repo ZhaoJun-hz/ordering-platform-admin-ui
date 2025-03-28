@@ -91,32 +91,35 @@ onMounted(async () => {
   <Page auto-content-height>
     <Grid>
       <template #toolbar_buttons>
-        <AccessControl :codes="['super admin']">
+        <AccessControl :codes="['systemMenu:add']">
           <ElButton type="success" @click="openFormDrawer"> 新增菜单 </ElButton>
         </AccessControl>
       </template>
       <template #action="{ row }">
         <div class="flex items-center justify-center space-x-4">
-          <ElTooltip class="box-item" content="编辑" placement="top">
-            <ElButton circle type="primary" @click="openFormDrawer(row)">
-              <span class="icon-[ep--edit]"></span>
-            </ElButton>
-          </ElTooltip>
-
-          <ElTooltip class="box-item" content="删除" placement="top">
-            <span>
-              <ElPopconfirm
-                title="确定删除么?"
-                @confirm="handlerDeleteMenu(row)"
-              >
-                <template #reference>
-                  <ElButton circle type="danger">
-                    <span class="icon-[ep--delete]"></span>
-                  </ElButton>
-                </template>
-              </ElPopconfirm>
-            </span>
-          </ElTooltip>
+          <AccessControl :codes="['systemMenu:edit']">
+            <ElTooltip class="box-item" content="编辑" placement="top">
+              <ElButton circle type="primary" @click="openFormDrawer(row)">
+                <span class="icon-[ep--edit]"></span>
+              </ElButton>
+            </ElTooltip>
+          </AccessControl>
+          <AccessControl :codes="['systemMenu:delete']">
+            <ElTooltip class="box-item" content="删除" placement="top">
+              <span>
+                <ElPopconfirm
+                  title="确定删除么?"
+                  @confirm="handlerDeleteMenu(row)"
+                >
+                  <template #reference>
+                    <ElButton circle type="danger">
+                      <span class="icon-[ep--delete]"></span>
+                    </ElButton>
+                  </template>
+                </ElPopconfirm>
+              </span>
+            </ElTooltip>
+          </AccessControl>
         </div>
       </template>
     </Grid>

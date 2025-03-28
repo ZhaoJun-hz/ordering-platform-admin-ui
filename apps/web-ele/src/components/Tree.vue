@@ -4,6 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { ElTree } from 'element-plus';
 
 interface ITreeProps {
+  checkStrictly?: boolean; // 父子节点状态关联
   data: {}[]; // 树形数据
   defaultProps: Record<string, any>; // 树节点配置项
   defaultCheckedKeys?: number[]; // 默认选中的节点
@@ -55,6 +56,7 @@ onMounted(() => {
     <ElTree
       ref="treeRef"
       v-model="selectValue"
+      :check-strictly="props.checkStrictly"
       :data="props.data"
       :default-checked-keys="props.defaultCheckedKeys"
       :expand-on-click-node="props.expandOnClickNode"

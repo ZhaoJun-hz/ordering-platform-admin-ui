@@ -95,6 +95,7 @@ async function onSubmit(values: Record<string, any>) {
       <template #selectMenus="props">
         <Tree
           v-model="record.selectMenus"
+          :check-strictly="true"
           :data="menuData"
           :default-checked-keys="record.defaultSelectMenus"
           :default-props="{ label: 'title' }"
