@@ -21,7 +21,7 @@ interface ISelectProps {
 const props = defineProps<ISelectProps>();
 const emit = defineEmits(['init', 'update:modelValue', 'optionsChange']);
 // 本地状态：用于代理 props.modelValue
-const localValue = ref<number>(props.modelValue ?? 0);
+const localValue = ref<number>(props.modelValue ?? '');
 const loading = ref(false);
 const optionsData = ref<OptionsItem[]>([]);
 // 首次是否加载过了
@@ -96,10 +96,10 @@ const getOptions = computed(() => {
       value,
     });
   });
-  res.push({
-    label: '请选择',
-    value: 0,
-  });
+  // res.push({
+  //   label: '请选择',
+  //   value: 0,
+  // });
   return res;
 });
 

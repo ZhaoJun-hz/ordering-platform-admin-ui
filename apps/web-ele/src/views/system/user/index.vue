@@ -133,7 +133,7 @@ async function handlerDeleteUser(record: any) {
           <template #toolbar_buttons>
             <AccessControl :codes="['super admin']">
               <ElButton type="success" @click="openFormDrawer">
-                新增角色
+                新增用户
               </ElButton>
             </AccessControl>
           </template>

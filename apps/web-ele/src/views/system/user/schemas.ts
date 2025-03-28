@@ -1,10 +1,10 @@
-import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
 import { h } from 'vue';
 
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { type VbenFormProps } from '#/adapter/form';
 import { getDeptTree } from '#/api/sys/dept';
 import { getRoleList } from '#/api/sys/role';
 
@@ -81,7 +81,6 @@ export const searchFormSchemas: VbenFormProps = {
         valueField: 'roleId',
         multiple: true,
       },
-      defaultValue: 0,
     },
     {
       fieldName: 'nickname',
@@ -147,7 +146,7 @@ export const dataFormSchemas: VbenFormProps = {
         valueField: 'roleId',
         multiple: true,
       },
-      defaultValue: 0,
+      // defaultValue: 0,
       rules: 'required',
     },
     {
