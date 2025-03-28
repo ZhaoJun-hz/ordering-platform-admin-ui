@@ -216,14 +216,14 @@ export const dataFormSchemas: VbenFormProps = {
                 {
                   value: 1,
                 },
-                () => '停用',
+                () => '启用',
               ),
               h(
                 ElRadioButton,
                 {
                   value: 2,
                 },
-                () => '启用',
+                () => '停用',
               ),
             ];
           },

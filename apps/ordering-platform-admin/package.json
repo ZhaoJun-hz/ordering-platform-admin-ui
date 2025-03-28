@@ -1,12 +1,12 @@
 {
-  "name": "@vben/web-ele",
+  "name": "@vben/ordering-platform-admin",
   "version": "5.4.8",
   "homepage": "https://vben.pro",
   "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vbenjs/vue-vben-admin.git",
-    "directory": "apps/web-ele"
+    "directory": "apps/ordering-platform-admin"
   },
   "license": "MIT",
   "author": {

@@ -1,8 +1,8 @@
 {
   "folders": [
     {
-      "name": "@vben/web-ele",
-      "path": "apps/web-ele",
+      "name": "@vben/ordering-platform-admin",
+      "path": "apps/ordering-platform-admin",
     },
     {
       "name": "@vben/docs",

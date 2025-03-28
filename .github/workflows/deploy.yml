@@ -121,7 +121,7 @@ jobs:
           server: ${{ secrets.PRO_FTP_HOST }}
           username: ${{ secrets.WEB_ELE_FTP_ACCOUNT }}
           password: ${{ secrets.WEB_ELE_FTP_PASSWORD }}
-          local-dir: ./apps/web-ele/dist/
+          local-dir: ./apps/ordering-platform-admin/dist/
 
   deploy-naive-ftp:
     name: Deploy Push Naive Ftp

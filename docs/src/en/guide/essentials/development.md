@@ -56,8 +56,8 @@ The execution command is: `pnpm run [script]` or `npm run [script]`.
     "build:antd": "pnpm run build --filter=@vben/web-antd",
     // Build the documentation separately
     "build:docs": "pnpm run build --filter=@vben/docs",
-    // Build the web-ele application separately
-    "build:ele": "pnpm run build --filter=@vben/web-ele",
+    // Build the ordering-platform-admin application separately
+    "build:ele": "pnpm run build --filter=@vben/ordering-platform-admin",
     // Build the web-naive application separately
     "build:naive": "pnpm run build --filter=@vben/naive",
     // Build the playground application separately
@@ -84,8 +84,8 @@ The execution command is: `pnpm run [script]` or `npm run [script]`.
     "dev:antd": "pnpm -F @vben/web-antd run dev",
     // Start the documentation
     "dev:docs": "pnpm -F @vben/docs run dev",
-    // Start the web-ele application
-    "dev:ele": "pnpm -F @vben/web-ele run dev",
+    // Start the ordering-platform-admin application
+    "dev:ele": "pnpm -F @vben/ordering-platform-admin run dev",
     // Start the web-naive application
     "dev:naive": "pnpm -F @vben/web-naive run dev",
     // Start the playground application

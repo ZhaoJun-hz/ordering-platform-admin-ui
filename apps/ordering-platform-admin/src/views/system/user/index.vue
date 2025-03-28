@@ -131,7 +131,7 @@ async function handlerDeleteUser(record: any) {
       <Page auto-content-height>
         <Grid>
           <template #toolbar_buttons>
-            <AccessControl :codes="['super admin']">
+            <AccessControl :codes="['systemUser:add']">
               <ElButton type="success" @click="openFormDrawer">
                 新增用户
               </ElButton>
@@ -139,26 +139,29 @@ async function handlerDeleteUser(record: any) {
           </template>
           <template #action="{ row }">
             <div class="flex items-center justify-center space-x-4">
-              <ElTooltip class="box-item" content="编辑" placement="top">
-                <ElButton circle type="primary" @click="openFormDrawer(row)">
-                  <span class="icon-[ep--edit]"></span>
-                </ElButton>
-              </ElTooltip>
-
-              <ElTooltip class="box-item" content="删除" placement="top">
-                <span>
-                  <ElPopconfirm
-                    title="确定删除么?"
-                    @confirm="handlerDeleteUser(row)"
-                  >
-                    <template #reference>
-                      <ElButton circle type="danger">
-                        <span class="icon-[ep--delete]"></span>
-                      </ElButton>
-                    </template>
-                  </ElPopconfirm>
-                </span>
-              </ElTooltip>
+              <AccessControl :codes="['systemUser:edit']">
+                <ElTooltip class="box-item" content="编辑" placement="top">
+                  <ElButton circle type="primary" @click="openFormDrawer(row)">
+                    <span class="icon-[ep--edit]"></span>
+                  </ElButton>
+                </ElTooltip>
+              </AccessControl>
+              <AccessControl :codes="['systemUser:delete']">
+                <ElTooltip class="box-item" content="删除" placement="top">
+                  <span>
+                    <ElPopconfirm
+                      title="确定删除么?"
+                      @confirm="handlerDeleteUser(row)"
+                    >
+                      <template #reference>
+                        <ElButton circle type="danger">
+                          <span class="icon-[ep--delete]"></span>
+                        </ElButton>
+                      </template>
+                    </ElPopconfirm>
+                  </span>
+                </ElTooltip>
+              </AccessControl>
             </div>
           </template>
         </Grid>
