@@ -131,7 +131,7 @@ async function handlerDeleteUser(record: any) {
       <Page auto-content-height>
         <Grid>
           <template #toolbar_buttons>
-            <AccessControl :codes="['systemUser:add']">
+            <AccessControl :codes="['systemUser:add']" type="code">
               <ElButton type="success" @click="openFormDrawer">
                 新增用户
               </ElButton>
@@ -139,14 +139,14 @@ async function handlerDeleteUser(record: any) {
           </template>
           <template #action="{ row }">
             <div class="flex items-center justify-center space-x-4">
-              <AccessControl :codes="['systemUser:edit']">
+              <AccessControl :codes="['systemUser:edit']" type="code">
                 <ElTooltip class="box-item" content="编辑" placement="top">
                   <ElButton circle type="primary" @click="openFormDrawer(row)">
                     <span class="icon-[ep--edit]"></span>
                   </ElButton>
                 </ElTooltip>
               </AccessControl>
-              <AccessControl :codes="['systemUser:delete']">
+              <AccessControl :codes="['systemUser:delete']" type="code">
                 <ElTooltip class="box-item" content="删除" placement="top">
                   <span>
                     <ElPopconfirm

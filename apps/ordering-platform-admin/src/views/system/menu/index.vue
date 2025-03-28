@@ -91,20 +91,20 @@ onMounted(async () => {
   <Page auto-content-height>
     <Grid>
       <template #toolbar_buttons>
-        <AccessControl :codes="['systemMenu:add']">
+        <AccessControl :codes="['systemMenu:add']" type="code">
           <ElButton type="success" @click="openFormDrawer"> 新增菜单 </ElButton>
         </AccessControl>
       </template>
       <template #action="{ row }">
         <div class="flex items-center justify-center space-x-4">
-          <AccessControl :codes="['systemMenu:edit']">
+          <AccessControl :codes="['systemMenu:edit']" type="code">
             <ElTooltip class="box-item" content="编辑" placement="top">
               <ElButton circle type="primary" @click="openFormDrawer(row)">
                 <span class="icon-[ep--edit]"></span>
               </ElButton>
             </ElTooltip>
           </AccessControl>
-          <AccessControl :codes="['systemMenu:delete']">
+          <AccessControl :codes="['systemMenu:delete']" type="code">
             <ElTooltip class="box-item" content="删除" placement="top">
               <span>
                 <ElPopconfirm

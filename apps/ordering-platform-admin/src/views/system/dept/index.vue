@@ -71,13 +71,13 @@ async function handlerDeleteMenu(record: any) {
   <Page auto-content-height>
     <Grid>
       <template #toolbar_buttons>
-        <AccessControl :codes="['systemDept:add']">
+        <AccessControl :codes="['systemDept:add']" type="code">
           <ElButton type="success" @click="openFormDrawer"> 新增部门 </ElButton>
         </AccessControl>
       </template>
       <template #action="{ row }">
         <div class="flex items-center justify-center space-x-4">
-          <AccessControl :codes="['systemDept:edit']">
+          <AccessControl :codes="['systemDept:edit']" type="code">
             <ElTooltip class="box-item" content="编辑" placement="top">
               <ElButton circle type="primary" @click="openFormDrawer(row)">
                 <span class="icon-[ep--edit]"></span>
@@ -85,7 +85,7 @@ async function handlerDeleteMenu(record: any) {
             </ElTooltip>
           </AccessControl>
 
-          <AccessControl :codes="['systemDept:delete']">
+          <AccessControl :codes="['systemDept:delete']" type="code">
             <ElTooltip class="box-item" content="删除" placement="top">
               <span>
                 <ElPopconfirm

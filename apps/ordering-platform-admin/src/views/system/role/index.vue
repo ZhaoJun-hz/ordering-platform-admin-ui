@@ -94,13 +94,13 @@ async function handlerDeleteRole(record: any) {
   <Page auto-content-height>
     <Grid>
       <template #toolbar_buttons>
-        <AccessControl :codes="['systemRole:add']">
+        <AccessControl :codes="['systemRole:add']" type="code">
           <ElButton type="success" @click="openFormDrawer"> 新增角色 </ElButton>
         </AccessControl>
       </template>
       <template #action="{ row }">
         <div class="flex items-center justify-center space-x-4">
-          <AccessControl :codes="['systemRole:edit']">
+          <AccessControl :codes="['systemRole:edit']" type="code">
             <ElTooltip class="box-item" content="编辑" placement="top">
               <ElButton circle type="primary" @click="openFormDrawer(row)">
                 <span class="icon-[ep--edit]"></span>
@@ -108,7 +108,7 @@ async function handlerDeleteRole(record: any) {
             </ElTooltip>
           </AccessControl>
 
-          <AccessControl :codes="['systemRole:delete']">
+          <AccessControl :codes="['systemRole:delete']" type="code">
             <ElTooltip class="box-item" content="删除" placement="top">
               <span>
                 <ElPopconfirm
