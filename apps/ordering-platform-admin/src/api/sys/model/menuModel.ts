@@ -11,11 +11,11 @@ export interface MenuInfo {
   path?: string;
   component?: string;
   permission?: string;
-  hideInMenu?: boolean;
+  hideInMenu: boolean;
   ignoreKeepAlive?: boolean;
   linkFlag?: boolean;
   link: string;
-  disabled?: boolean;
+  disabled: boolean;
   selectApi?: number[];
 }
 

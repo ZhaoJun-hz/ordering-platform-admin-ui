@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { IconPicker } from '@vben/common-ui';
 import { listIcons } from '@vben/icons';
@@ -32,14 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
   value: '',
   width: '100%',
 });
-const emit = defineEmits(['onInit']);
-const iconValue = defineModel<string>('iconValue');
+const modelValue = defineModel<string>({ required: true, default: '' });
 const refIconPicker = ref();
-// const currentSelect = ref('');
-onMounted(() => {
-  // currentSelect.value = iconValue.value;
-  emit('onInit', iconValue.value);
-});
 
 const currentList = computed(() => {
   try {
@@ -64,13 +58,13 @@ const triggerPopover = () => {
 };
 
 const handleChange = (icon: string) => {
-  iconValue.value = icon;
+  modelValue.value = icon;
 };
 </script>
 
 <template>
   <ElInput
-    v-model="iconValue"
+    v-model="modelValue"
     :clearable="props.allowClear"
     :readonly="props.readonly"
     :style="{ width }"
@@ -83,7 +77,7 @@ const handleChange = (icon: string) => {
         ref="refIconPicker"
         :icons="currentList"
         :page-size="pageSize"
-        :value="iconValue"
+        :value="modelValue"
         @change="handleChange"
       />
     </template>

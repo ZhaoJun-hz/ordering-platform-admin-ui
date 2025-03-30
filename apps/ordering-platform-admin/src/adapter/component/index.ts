@@ -3,11 +3,10 @@
  * 可用于 vben-form、vben-modal、vben-drawer 等组件使用,
  */
 
-import type { BaseFormComponentType } from '@vben/common-ui';
-
 import type { Component, SetupContext } from 'vue';
 import { h } from 'vue';
 
+import { type BaseFormComponentType } from '@vben/common-ui';
 import { globalShareState } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
@@ -30,6 +29,8 @@ import {
   ElUpload,
 } from 'element-plus';
 
+import ApiSelect from '#/components/ApiSelect.vue';
+import IconPicker from '#/components/IconSelect/icon-picker.vue';
 import InputNumber from '#/components/InputNumber.vue';
 import Select from '#/components/Select.vue';
 import TreeSelect from '#/components/TreeSelect.vue';
@@ -87,6 +88,8 @@ async function initComponentAdapter() {
     CustomSelect: Select,
     CustomTreeSelect: TreeSelect,
     CustomInputNumber: InputNumber,
+    CustomIconPicker: IconPicker,
+    CustomTransferSelect: ApiSelect,
     Space: ElSpace,
     Switch: ElSwitch,
     TimePicker: ElTimePicker,

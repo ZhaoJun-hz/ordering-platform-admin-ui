@@ -1,12 +1,35 @@
 import type { VbenFormProps } from '#/adapter/form';
 import type { VxeGridProps } from '#/adapter/vxe-table';
+import type { MenuInfo } from '#/api/sys/model/menuModel';
 
 import { h } from 'vue';
 
 import { Icon } from '@iconify/vue';
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { getApiList } from '#/api/sys/api';
 import { getMenuTree } from '#/api/sys/menu';
+
+const STATUS_TAG_MAP: Record<
+  'false' | 'true',
+  { color: 'danger' | 'primary'; text: string }
+> = {
+  true: { text: '是', color: 'danger' },
+  false: { text: '否', color: 'primary' },
+} as const;
+
+const MENU_TYPE_OPTIONS = [
+  { label: '目录', value: 'M' },
+  { label: '菜单', value: 'C' },
+  { label: '按钮', value: 'F' },
+];
+
+// =============== 通用方法 ===============
+const createRadioOptions = (options: Array<{ label: string; value: any }>) => {
+  return options.map((opt) =>
+    h(ElRadioButton, { value: opt.value }, () => opt.label),
+  );
+};
 
 export const tableColumns: VxeGridProps = {
   columns: [
@@ -39,16 +62,11 @@ export const tableColumns: VxeGridProps = {
       field: 'disabled',
       width: 70,
       slots: {
-        default: (record) => {
-          let resultText = '';
-          resultText = record.row.disabled ? '是' : '否';
-          return h(
-            ElTag,
-            {
-              type: record.row.disabled ? 'danger' : 'primary',
-            },
-            () => resultText,
-          );
+        default: ({ row }: { row: MenuInfo }) => {
+          const statusKey =
+            row.disabled.toString() as keyof typeof STATUS_TAG_MAP;
+          const { text, color } = STATUS_TAG_MAP[statusKey];
+          return h(ElTag, { type: color }, () => text);
         },
       },
     },
@@ -57,16 +75,11 @@ export const tableColumns: VxeGridProps = {
       field: 'hideInMenu',
       width: 70,
       slots: {
-        default: (record) => {
-          let resultText = '';
-          resultText = record.row.hideInMenu ? '是' : '否';
-          return h(
-            ElTag,
-            {
-              type: record.row.hideInMenu ? 'danger' : 'primary',
-            },
-            () => resultText,
-          );
+        default: ({ row }: { row: MenuInfo }) => {
+          const statusKey =
+            row.hideInMenu.toString() as keyof typeof STATUS_TAG_MAP;
+          const { text, color } = STATUS_TAG_MAP[statusKey];
+          return h(ElTag, { type: color }, () => text);
         },
       },
     },
@@ -97,35 +110,9 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'menuType',
       label: '菜单类型',
       formItemClass: 'col-span-2',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: 'M',
-                },
-                () => '目录',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: 'C',
-                },
-                () => '菜单',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: 'F',
-                },
-                () => '按钮',
-              ),
-            ];
-          },
-        };
-      },
+      renderComponentContent: () => ({
+        default: () => createRadioOptions(MENU_TYPE_OPTIONS),
+      }),
       defaultValue: 'M',
       rules: 'required',
     },
@@ -142,11 +129,18 @@ export const dataFormSchemas: VbenFormProps = {
     },
     // 显示排序
     {
-      component: 'Input',
+      component: 'CustomInputNumber',
       fieldName: 'sort',
       label: '显示排序',
+      componentProps: {
+        controlsPosition: 'right',
+        min: 0,
+        max: 999,
+        precision: 0,
+      },
       rules: 'required',
       help: '根据序号升序排列',
+      defaultValue: 10,
     },
     // 上级菜单
     {
@@ -167,15 +161,14 @@ export const dataFormSchemas: VbenFormProps = {
           label: '主菜单',
           value: 0,
         },
-        // defaultValue: 0,
       },
       rules: 'required',
       help: '指当前菜单停靠的菜单归属',
       defaultValue: 0,
     },
-    // 菜单图标
+    // 菜单图标  TODO 优化掉
     {
-      component: 'Input',
+      component: 'CustomIconPicker',
       fieldName: 'icon',
       label: '菜单图标',
       componentProps: {},
@@ -266,28 +259,13 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'hideInMenu',
       label: '隐藏菜单',
       formItemClass: 'col-span-1',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: false,
-                },
-                () => '否',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: true,
-                },
-                () => '是',
-              ),
-            ];
-          },
-        };
-      },
+      renderComponentContent: () => ({
+        default: () =>
+          createRadioOptions([
+            { label: '否', value: false },
+            { label: '是', value: true },
+          ]),
+      }),
       defaultValue: false,
     },
     // 取消页面缓存
@@ -296,28 +274,13 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'ignoreKeepAlive',
       label: '取消页面缓存',
       formItemClass: 'col-span-1',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: false,
-                },
-                () => '否',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: true,
-                },
-                () => '是',
-              ),
-            ];
-          },
-        };
-      },
+      renderComponentContent: () => ({
+        default: () =>
+          createRadioOptions([
+            { label: '否', value: false },
+            { label: '是', value: true },
+          ]),
+      }),
       defaultValue: false,
       dependencies: {
         if(values) {
@@ -333,28 +296,13 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'linkFlag',
       label: '外链',
       formItemClass: 'col-span-1',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: false,
-                },
-                () => '否',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: true,
-                },
-                () => '是',
-              ),
-            ];
-          },
-        };
-      },
+      renderComponentContent: () => ({
+        default: () =>
+          createRadioOptions([
+            { label: '否', value: false },
+            { label: '是', value: true },
+          ]),
+      }),
       defaultValue: false,
       dependencies: {
         if(values) {
@@ -388,28 +336,13 @@ export const dataFormSchemas: VbenFormProps = {
       fieldName: 'disabled',
       label: '禁用',
       formItemClass: 'col-span-1',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: false,
-                },
-                () => '否',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: true,
-                },
-                () => '是',
-              ),
-            ];
-          },
-        };
-      },
+      renderComponentContent: () => ({
+        default: () =>
+          createRadioOptions([
+            { label: '否', value: false },
+            { label: '是', value: true },
+          ]),
+      }),
       defaultValue: false,
       dependencies: {
         if(values) {
@@ -419,15 +352,21 @@ export const dataFormSchemas: VbenFormProps = {
         triggerFields: ['menuType'],
       },
     },
-    // 选择API
+    // 选择API TODO 优化
     {
-      component: 'Input',
+      component: 'CustomTransferSelect',
       fieldName: 'selectApi',
       label: '选择API',
       formItemClass: 'col-span-2 items-baseline',
       componentProps: {
-        // data: data.value,
+        api: getApiList,
+        params: { pageNum: 1, pageSize: 10_000 },
+        titles: ['未授权', '已授权'],
+        buttonTexts: ['收回', '授权'],
         filterable: true,
+        resultField: 'data',
+        valueField: 'id',
+        labelField: 'title',
       },
       dependencies: {
         if(values) {

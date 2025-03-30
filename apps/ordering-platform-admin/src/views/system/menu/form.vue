@@ -9,9 +9,6 @@ import { ElNotification } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
 import { createMenu, updateMenu } from '#/api/sys/menu';
-import ApiSelect from '#/components/ApiSelect.vue';
-import IconPicker from '#/components/IconSelect/icon-picker.vue';
-import InputNumber from '#/components/InputNumber.vue';
 
 import { dataFormSchemas } from './schemas';
 
@@ -21,7 +18,6 @@ defineOptions({
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-let apiData: { key: number; label: string }[];
 
 const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
@@ -44,7 +40,6 @@ const [Drawer, drawerApi] = useVbenDrawer({
     isUpdate.value = drawerApi.getData()?.isUpdate;
     record.value = isOpen ? drawerApi.getData()?.record || {} : {};
     gridApi.value = isOpen ? drawerApi.getData()?.gridApi : null;
-    apiData = drawerApi.getData()?.apiData;
     if (isOpen) {
       formApi.setValues(record.value);
     }
@@ -79,62 +74,6 @@ defineExpose(drawerApi);
     :close-on-press-escape="false"
     class="w-1/2"
   >
-    <Form>
-      <template #selectApi="props">
-        <ApiSelect
-          v-model:select-values="record.selectApi"
-          :button-texts="['收回', '授权']"
-          :data="apiData"
-          :titles="['未授权', '已授权']"
-          @on-init="
-            (nV: number[]) => {
-              console.log(`ApiSelect init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:select-values="
-            (nV: number[]) => {
-              console.log(`ApiSelect update 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-        />
-      </template>
-
-      <template #icon="props">
-        <IconPicker
-          v-model:icon-value="record.icon"
-          @on-init="
-            (nV: string) => {
-              console.log(`IconPicker init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:icon-value="
-            (newValue: string) => {
-              console.log(`IconPicker 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
-      <template #sort="props">
-        <InputNumber
-          v-model:input-number="record.sort"
-          @on-init="
-            (nV: number) => {
-              console.log(`InputNumber init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:input-number="
-            (newValue: number) => {
-              console.log(`InputNumber 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
-    </Form>
+    <Form />
   </Drawer>
 </template>
