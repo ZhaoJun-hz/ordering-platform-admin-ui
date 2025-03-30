@@ -166,7 +166,7 @@ export const dataFormSchemas: VbenFormProps = {
       help: '指当前菜单停靠的菜单归属',
       defaultValue: 0,
     },
-    // 菜单图标  TODO 优化掉
+    // 菜单图标
     {
       component: 'CustomIconPicker',
       fieldName: 'icon',
@@ -352,7 +352,7 @@ export const dataFormSchemas: VbenFormProps = {
         triggerFields: ['menuType'],
       },
     },
-    // 选择API TODO 优化
+    // 选择API
     {
       component: 'CustomTransferSelect',
       fieldName: 'selectApi',

@@ -2,8 +2,6 @@
 import type { VxeGridProps } from '#/adapter/vxe-table';
 import type { MenuInfo } from '#/api/sys/model/menuModel';
 
-import { onMounted } from 'vue';
-
 import { AccessControl } from '@vben/access';
 import { Page, useVbenDrawer } from '@vben/common-ui';
 
@@ -11,7 +9,6 @@ import { ElButton, ElPopconfirm, ElTooltip } from 'element-plus';
 import { isPlainObject } from 'remeda';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getApiList } from '#/api/sys/api';
 import { deleteMenu, getMenuInfo, getMenuList } from '#/api/sys/menu';
 
 import MenuForm from './form.vue';
@@ -45,7 +42,6 @@ const gridOptions: VxeGridProps<MenuInfo> = {
     },
   },
 };
-let apiData: { key: number; label: string }[] = [];
 const [Grid, gridApi] = useVbenVxeGrid({ gridOptions });
 
 const [Drawer, drawerApi] = useVbenDrawer({
@@ -61,7 +57,6 @@ async function openFormDrawer(record: any) {
       record,
       gridApi,
       isUpdate: true,
-      apiData,
     });
   } else {
     // 新增
@@ -69,7 +64,6 @@ async function openFormDrawer(record: any) {
       record: { sort: 10, parentMenuId: 0 },
       gridApi,
       isUpdate: false,
-      apiData,
     });
   }
 
@@ -79,12 +73,6 @@ async function handlerDeleteMenu(record: any) {
   await deleteMenu(record.menuId as number);
   gridApi.reload();
 }
-onMounted(async () => {
-  const apiList = await getApiList({ pageNum: 1, pageSize: 10_000 });
-  apiData = apiList.data.map((item) => {
-    return Object.assign({}, { key: item.id!, label: item.title! });
-  });
-});
 </script>
 
 <template>
