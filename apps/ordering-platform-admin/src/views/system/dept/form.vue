@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DeptInfo } from '#/api/sys/model/deptModel';
 
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useVbenDrawer } from '@vben/common-ui';
 
@@ -9,7 +9,6 @@ import { ElNotification } from 'element-plus';
 
 import { useVbenForm } from '#/adapter/form';
 import { createDept, updateDept } from '#/api/sys/dept';
-import InputNumber from '#/components/InputNumber.vue';
 
 import { dataFormSchemas } from './schemas';
 
@@ -19,12 +18,13 @@ defineOptions({
 const record = ref();
 const gridApi = ref();
 const isUpdate = ref(false);
-// let deptData: DeptTree[] = [];
+
+const title = computed(() => (isUpdate.value ? '编辑部门' : '新增部门'));
 
 const [Form, formApi] = useVbenForm({
   showDefaultActions: false,
   handleSubmit: onSubmit,
-  schema: [...(dataFormSchemas.schema as any)],
+  schema: dataFormSchemas.schema,
   wrapperClass: 'grid-cols-2',
 });
 const [Drawer, drawerApi] = useVbenDrawer({
@@ -46,7 +46,7 @@ const [Drawer, drawerApi] = useVbenDrawer({
       formApi.setValues(record.value);
     }
     drawerApi.setState({
-      title: isUpdate.value ? '编辑部门' : '新增部门',
+      title: title.value,
     });
   },
 });
@@ -57,7 +57,7 @@ async function onSubmit(values: Record<string, any>) {
     : await createDept(values as DeptInfo);
   ElNotification({
     title: 'Success',
-    message: `${isUpdate.value ? '编辑部门' : '新增部门'}操作成功`,
+    message: `${title.value}操作成功`,
     type: 'success',
   });
   gridApi.value.reload();
@@ -71,24 +71,6 @@ defineExpose(drawerApi);
     :close-on-press-escape="false"
     class="w-1/2"
   >
-    <Form>
-      <template #sort="props">
-        <InputNumber
-          v-model:input-number="record.sort"
-          @on-init="
-            (nV: number) => {
-              console.log(`InputNumber init 更新value ${nV}`);
-              props.setValue(nV);
-            }
-          "
-          @update:input-number="
-            (newValue: number) => {
-              console.log(`InputNumber 更新value ${newValue}`);
-              props.setValue(newValue);
-            }
-          "
-        />
-      </template>
-    </Form>
+    <Form />
   </Drawer>
 </template>

@@ -30,6 +30,7 @@ import {
   ElUpload,
 } from 'element-plus';
 
+import InputNumber from '#/components/InputNumber.vue';
 import Select from '#/components/Select.vue';
 import TreeSelect from '#/components/TreeSelect.vue';
 
@@ -85,13 +86,13 @@ async function initComponentAdapter() {
     Select: withDefaultPlaceholder(ElSelect, 'select'),
     CustomSelect: Select,
     CustomTreeSelect: TreeSelect,
+    CustomInputNumber: InputNumber,
     Space: ElSpace,
     Switch: ElSwitch,
     TimePicker: ElTimePicker,
     DatePicker: ElDatePicker,
     TreeSelect: withDefaultPlaceholder(ElTreeSelect, 'select'),
     Upload: ElUpload,
-    DatePicker: ElDatePicker,
     Transfer: ElTransfer,
   };
 

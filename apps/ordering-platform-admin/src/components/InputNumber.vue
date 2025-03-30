@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-
 import { ElInputNumber } from 'element-plus';
 
-const emit = defineEmits(['onInit']);
-const inputNumber = defineModel<number>('inputNumber');
-onMounted(() => {
-  emit('onInit', inputNumber.value);
+const modelValue = defineModel<number>({
+  required: true,
+  default: 10,
 });
 </script>
 
 <template>
-  <ElInputNumber v-model="inputNumber" controls-position="right">
+  <ElInputNumber v-model="modelValue" controls-position="right">
     <template #decrease-icon>
       <span class="icon-[ep--arrow-down]"></span>
     </template>

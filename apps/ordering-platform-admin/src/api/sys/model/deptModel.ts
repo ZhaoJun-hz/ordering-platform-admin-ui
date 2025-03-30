@@ -1,4 +1,4 @@
-import type { BaseListResp } from '#/api/model/baseModel';
+import { type BaseListResp, StatusEnum } from '#/api/model/baseModel';
 
 export interface DeptInfo {
   deptId: number;
@@ -8,7 +8,7 @@ export interface DeptInfo {
   leader: string;
   phone: string;
   email: string;
-  status: number;
+  status: StatusEnum;
   createTime: string;
 }
 
@@ -21,7 +21,7 @@ export interface DeptTree {
   leader?: string;
   phone?: string;
   email?: string;
-  status?: number;
+  status?: StatusEnum;
   createTime?: string;
   children?: DeptTree[];
 }

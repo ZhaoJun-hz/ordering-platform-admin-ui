@@ -5,6 +5,7 @@ import { h } from 'vue';
 
 import { ElRadioButton, ElTag } from 'element-plus';
 
+import { STATUS_MAP, StatusEnum } from '#/api/model/baseModel';
 import { getDeptTree } from '#/api/sys/dept';
 
 export const tableColumns: VxeGridProps = {
@@ -35,16 +36,11 @@ export const tableColumns: VxeGridProps = {
       field: 'status',
       width: 70,
       slots: {
-        default: (record) => {
-          let resultText = '';
-          resultText = record.row.status === 1 ? '启用' : '停用';
-          return h(
-            ElTag,
-            {
-              type: record.row.status === 1 ? 'primary' : 'danger',
-            },
-            () => resultText,
-          );
+        default: ({ row }) => {
+          const statusKey = row.status as StatusEnum;
+          const { text, color } =
+            STATUS_MAP[statusKey] ?? STATUS_MAP[StatusEnum.DISABLED];
+          return h(ElTag, { type: color as 'danger' | 'primary' }, () => text);
         },
       },
     },
@@ -129,40 +125,42 @@ export const dataFormSchemas: VbenFormProps = {
       label: '负责人邮箱',
     },
     {
-      component: 'Input',
+      component: 'CustomInputNumber',
       fieldName: 'sort',
       label: '显示排序',
+      componentProps: {
+        controlsPosition: 'right',
+        min: 0,
+        max: 999,
+        precision: 0,
+      },
       rules: 'required',
       help: '根据序号升序排列',
+      defaultValue: 10,
     },
     {
       component: 'RadioGroup',
       fieldName: 'status',
       label: '状态',
-      formItemClass: 'col-span-1',
-      renderComponentContent: () => {
-        return {
-          default: () => {
-            return [
-              h(
-                ElRadioButton,
-                {
-                  value: 1,
-                },
-                () => '停用',
-              ),
-              h(
-                ElRadioButton,
-                {
-                  value: 2,
-                },
-                () => '启用',
-              ),
-            ];
-          },
-        };
-      },
-      defaultValue: 2,
+      renderComponentContent: () => ({
+        default: () => [
+          h(
+            ElRadioButton,
+            {
+              value: StatusEnum.DISABLED,
+            },
+            () => '停用',
+          ),
+          h(
+            ElRadioButton,
+            {
+              value: StatusEnum.ENABLED,
+            },
+            () => '启用',
+          ),
+        ],
+      }),
+      defaultValue: StatusEnum.ENABLED,
     },
   ],
 };

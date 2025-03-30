@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { DeptInfo } from '#/api/sys/model/deptModel';
+
 import { AccessControl } from '@vben/access';
 import { Page, useVbenDrawer } from '@vben/common-ui';
 
 import { ElButton, ElPopconfirm, ElTooltip } from 'element-plus';
-import { isPlainObject } from 'remeda';
 
 import { useVbenVxeGrid, type VxeGridProps } from '#/adapter/vxe-table';
 import { deleteDept, getDeptList } from '#/api/sys/dept';
@@ -44,20 +45,12 @@ const [Drawer, drawerApi] = useVbenDrawer({
   connectedComponent: DeptForm,
 });
 
-async function openFormDrawer(record: any) {
-  if (isPlainObject(record)) {
-    drawerApi.setData({
-      record,
-      gridApi,
-      isUpdate: true,
-    });
-  } else {
-    drawerApi.setData({
-      record: { sort: 10, parentDeptId: 0 },
-      gridApi,
-      isUpdate: false,
-    });
-  }
+async function openFormDrawer(record?: DeptInfo) {
+  drawerApi.setData({
+    record,
+    gridApi,
+    isUpdate: !!record,
+  });
   drawerApi.open();
 }
 
@@ -72,7 +65,9 @@ async function handlerDeleteMenu(record: any) {
     <Grid>
       <template #toolbar_buttons>
         <AccessControl :codes="['systemDept:add']" type="code">
-          <ElButton type="success" @click="openFormDrawer"> 新增部门 </ElButton>
+          <ElButton type="success" @click="openFormDrawer()">
+            新增部门
+          </ElButton>
         </AccessControl>
       </template>
       <template #action="{ row }">
