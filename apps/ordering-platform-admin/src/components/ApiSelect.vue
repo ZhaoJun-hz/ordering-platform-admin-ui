@@ -41,9 +41,8 @@ const fetchData = async () => {
 
   try {
     loading.value = true;
-    const response = await props.api(props.params);
     // 使用 for...of 替代 reduce
-    let current: any = response;
+    let current: any = await props.api(props.params);
     for (const field of props.resultField.split('.')) {
       current = current?.[field];
       if (current === undefined) break;
